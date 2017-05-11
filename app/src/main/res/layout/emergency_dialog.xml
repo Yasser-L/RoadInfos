@@ -1,0 +1,168 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+        <TextView
+            style="@style/TextAppearance.AppCompat.Light.SearchResult.Title"
+            android:layout_width="match_parent"
+            android:scrollHorizontally="false"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:layout_marginBottom="20dp"
+            android:gravity="center"
+            android:text="What kind of emergency are you in ?" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="20dp"
+            android:orientation="horizontal">
+
+
+                <ImageButton
+                    android:id="@+id/accidentEm"
+                    android:layout_width="0dp"
+                    android:layout_weight="1"
+                    android:layout_margin="5dp"
+                    android:layout_height="wrap_content"
+                    android:src="@drawable/accident_2"
+                    android:background="?android:selectableItemBackground"
+                    android:scaleType="fitCenter"
+                    />
+
+                <ImageButton
+                    android:id="@+id/medicalEm"
+                    android:layout_width="0dp"
+                    android:layout_weight="1"
+                    android:layout_margin="5dp"
+                    android:layout_height="wrap_content"
+                    android:src="@drawable/syringe"
+                    android:background="?android:selectableItemBackground"
+                    android:scaleType="fitCenter"
+                    />
+
+                <ImageButton
+                    android:id="@+id/assaultEm"
+                    android:layout_width="0dp"
+                    android:layout_weight="1"
+                    android:layout_margin="5dp"
+                    android:layout_height="wrap_content"
+                    android:src="@drawable/assault"
+                    android:background="?android:selectableItemBackground"
+                    android:scaleType="fitCenter"
+                    />
+
+
+
+        </LinearLayout>
+
+        <TextView
+            android:id="@+id/currentEmergency"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="20dp"
+            style="@style/TextAppearance.AppCompat.Light.SearchResult.Title"
+            android:textAlignment="center"
+            android:text="..."/>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="1dp"
+                android:layout_weight="1" />
+
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="1dp"
+                android:layout_weight="3"
+                android:background="#111" />
+
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="1dp"
+                android:layout_weight="1" />
+
+
+        </LinearLayout>
+
+
+        <LinearLayout
+            android:id="@+id/emContactsList"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="10dp"
+            android:layout_marginTop="20dp"
+            android:orientation="vertical"
+            android:padding="2dp">
+
+            <TextView
+                android:id="@+id/emListTitle"
+                style="@style/TextAppearance.AppCompat.Light.SearchResult.Title"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="5dp"
+                android:gravity="center"
+                android:padding="5dp"
+                android:text="Which contacts would you like to send an S.O.S to ?" />
+
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/emEmptyContactsList"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="10dp"
+            android:layout_marginTop="20dp"
+            android:orientation="vertical"
+            android:padding="2dp"
+            android:visibility="gone">
+
+            <TextView
+                android:id="@+id/emptyEmListTitle"
+                style="@style/TextAppearance.AppCompat.Light.SearchResult.Title"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="5dp"
+                android:gravity="center"
+                android:padding="5dp"
+                android:text="Pick a contact to send an S.O.S to from your contacts" />
+
+            <Button
+                android:id="@+id/pickEmContact"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_margin="5dp"
+                style="@style/Widget.AppCompat.Button.Colored"
+                android:text="Pick a contact"
+                />
+
+
+        </LinearLayout>
+
+        <EditText
+            android:id="@+id/sosMessage"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Type your message here..."
+            android:paddingLeft="10dp"
+            android:paddingRight="10dp"
+            android:textAlignment="center"
+            android:textColor="#111"
+            android:textSize="16sp">
+
+        </EditText>
+
+
+    </LinearLayout>
+</ScrollView>
