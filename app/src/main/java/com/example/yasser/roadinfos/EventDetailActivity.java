@@ -4,11 +4,25 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
-import android.support.v7.widget.Toolbar;
-import android.view.View;
-import android.support.v7.app.AppCompatActivity;
 import android.support.v7.app.ActionBar;
+import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.ImageView;
+import android.widget.Toast;
+
+import com.android.volley.AuthFailureError;
+import com.android.volley.Request;
+import com.android.volley.RequestQueue;
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.StringRequest;
+import com.android.volley.toolbox.Volley;
+
+import java.util.Hashtable;
+import java.util.Map;
 
 /**
  * An activity representing a single Event detail screen. This
@@ -18,12 +32,21 @@ import android.view.MenuItem;
  */
 public class EventDetailActivity extends AppCompatActivity {
 
+    private ImageView event_image, event_image_2, event_image_3, event_image_4;
+
+    private String DOWNLOAD_URL ="http://192.168.1.2/RoadInfos/GetEventImages.php";
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_event_detail);
         Toolbar toolbar = (Toolbar) findViewById(R.id.detail_toolbar);
         setSupportActionBar(toolbar);
+
+        event_image = (ImageView) findViewById(R.id.detailEventImage);
+        event_image_2 = (ImageView) findViewById(R.id.detailEventImage2);
+        event_image_3 = (ImageView) findViewById(R.id.detailEventImage3);
+        event_image_4 = (ImageView) findViewById(R.id.detailEventImage4);
 
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.event_detail_fab);
         fab.setOnClickListener(new View.OnClickListener() {
@@ -38,6 +61,7 @@ public class EventDetailActivity extends AppCompatActivity {
         ActionBar actionBar = getSupportActionBar();
         if (actionBar != null) {
             actionBar.setDisplayHomeAsUpEnabled(true);
+            actionBar.setTitle("Event 1");
         }
 
         // savedInstanceState is non-null when there is fragment state
@@ -78,4 +102,53 @@ public class EventDetailActivity extends AppCompatActivity {
         }
         return super.onOptionsItemSelected(item);
     }
+
+
+                                    ////////////////////////
+                                    //// HELPER METHODS ////
+                                    ////////////////////////
+
+    private void DownloadImages (final String eventId){
+        StringRequest stringRequest = new StringRequest(Request.Method.POST, DOWNLOAD_URL,
+                new Response.Listener<String>() {
+                    @Override
+                    public void onResponse(String s) {
+
+                        //Showing toast message of the response
+                        Toast.makeText(getApplicationContext(), "Success: " +s, Toast.LENGTH_LONG).show();
+                        Log.d("messg",s);
+                    }
+                },
+                new Response.ErrorListener() {
+                    @Override
+                    public void onErrorResponse(VolleyError volleyError) {
+
+
+                        //Showing toast
+                        Toast.makeText(getApplicationContext(), "eeee: " +volleyError.getMessage(), Toast.LENGTH_LONG).show();
+                    }
+                }){
+            @Override
+            protected Map<String, String> getParams() throws AuthFailureError {
+
+                //Creating parameters
+                Map<String,String> params = new Hashtable<String, String>();
+
+                //Adding parameters
+                params.put("eventId", eventId);
+
+                //returning parameters
+                return params;
+            }
+        };
+
+        //Creating a Request Queue
+        RequestQueue requestQueue = Volley.newRequestQueue(this);
+
+        //Adding request to the queue
+        requestQueue.add(stringRequest);
+    }
+
+
+
 }

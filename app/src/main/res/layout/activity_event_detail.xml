@@ -48,6 +48,89 @@
         android:layout_margin="@dimen/fab_margin"
         app:layout_anchor="@+id/event_detail_container"
         app:layout_anchorGravity="top|end"
-        app:srcCompat="@android:drawable/stat_notify_chat" />
+        app:srcCompat="@android:drawable/star_big_off" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@drawable/pattern_bg_2"
+        android:layout_marginTop="@dimen/app_bar_height"
+        android:orientation="vertical"
+        >
+
+        <TextView
+            android:id="@+id/detailEventTitle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Title"
+            style="@style/TextAppearance.AppCompat.Display1"
+            android:layout_margin="16dp"
+            android:background="@color/colorAccent"
+            />
+
+        <TextView
+            android:id="@+id/detailEventDesc"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            style="@style/TextAppearance.AppCompat.Medium"
+            android:text="Desc Desc Desc Desc Desc Desc Desc Desc Desc."
+            android:layout_margin="16dp"
+            />
+
+
+        <ImageView
+            android:id="@+id/detailEventImage"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginStart="16dp"
+            android:layout_marginEnd="16dp"
+            android:layout_marginBottom="10dp"
+            android:scaleType="fitXY"
+            android:adjustViewBounds="true"
+            />
+
+
+
+        <ImageView
+            android:id="@+id/detailEventImage2"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginStart="16dp"
+            android:layout_marginEnd="16dp"
+            android:layout_marginBottom="10dp"
+            android:scaleType="fitXY"
+            android:adjustViewBounds="true"
+            />
+
+
+
+        <ImageView
+            android:id="@+id/detailEventImage3"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginStart="16dp"
+            android:layout_marginEnd="16dp"
+            android:layout_marginBottom="10dp"
+            android:scaleType="fitXY"
+            android:adjustViewBounds="true"
+            />
+
+
+        <ImageView
+            android:id="@+id/detailEventImage4"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginStart="16dp"
+            android:layout_marginEnd="16dp"
+            android:layout_marginBottom="10dp"
+            android:scaleType="fitXY"
+            android:adjustViewBounds="true"
+            />
+
+    </LinearLayout>
 
 </android.support.design.widget.CoordinatorLayout>

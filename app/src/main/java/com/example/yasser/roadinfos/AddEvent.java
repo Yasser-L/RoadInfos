@@ -1,39 +1,55 @@
 package com.example.yasser.roadinfos;
 
+import android.app.Activity;
+import android.app.ProgressDialog;
 import android.content.Intent;
+import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.graphics.drawable.BitmapDrawable;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Environment;
 import android.provider.MediaStore;
 import android.support.v4.content.FileProvider;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Base64;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.Toast;
 
+import com.android.volley.AuthFailureError;
+import com.android.volley.Request;
+import com.android.volley.RequestQueue;
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.StringRequest;
+import com.android.volley.toolbox.Volley;
 import com.daimajia.slider.library.SliderLayout;
 import com.daimajia.slider.library.SliderTypes.BaseSliderView;
 import com.daimajia.slider.library.SliderTypes.TextSliderView;
 import com.daimajia.slider.library.Tricks.ViewPagerEx;
 
+import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.HashMap;
+import java.util.Hashtable;
 import java.util.Locale;
+import java.util.Map;
 import java.util.UUID;
 
 public class AddEvent extends AppCompatActivity implements BaseSliderView.OnSliderClickListener, ViewPagerEx.OnPageChangeListener {
 
-    private Button take_picture, new_folder;
+    private Button take_picture, new_folder, add_event;
     private static final int CAMERA_REQUEST = 1888;
-    private ImageView event_image, event_image_2, event_image_3;
+    private ImageView event_image, event_image_2, event_image_3, event_image_4;
+//    private TextView EIText, EIText2, EIText3;
     private SliderLayout event_images_slider;
     String mCurrentPhotoPath;
     static final int REQUEST_TAKE_PHOTO = 1;
@@ -53,6 +69,11 @@ public class AddEvent extends AppCompatActivity implements BaseSliderView.OnSlid
     private Uri fileUri; // file url to store image/video
 
     static File mediaFile = null;
+
+    private String UPLOAD_URL ="http://192.168.1.2/RoadInfos/UploadImages.php";
+    private String UPLOADS_FOLDER ="http://localhost/RoadInfos/Uploads/";
+
+//    private String KEY_IMAGE = "image";
 
 
     /**
@@ -86,10 +107,13 @@ public class AddEvent extends AppCompatActivity implements BaseSliderView.OnSlid
         setContentView(R.layout.activity_add_event);
 
         take_picture = (Button) findViewById(R.id.takePicture);
+        add_event = (Button) findViewById(R.id.confirmAddEvent);
         new_folder = (Button) findViewById(R.id.newFolderTest);
         event_image = (ImageView) findViewById(R.id.eventImage);
         event_image_2 = (ImageView) findViewById(R.id.eventImage2);
         event_image_3 = (ImageView) findViewById(R.id.eventImage3);
+        event_image_4 = (ImageView) findViewById(R.id.eventImage4);
+//        EIText = (TextView) findViewById(R.id.eventImageText);
         event_images_slider = (SliderLayout) findViewById(R.id.eventImagesSlider);
 
         HashMap<String,Integer> file_maps = new HashMap<String, Integer>();
@@ -130,11 +154,43 @@ public class AddEvent extends AppCompatActivity implements BaseSliderView.OnSlid
         new_folder.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                for (File image : GetEventImages()) {
-                    Toast.makeText(getApplicationContext(), image.toString(), Toast.LENGTH_LONG).show();
-                }
-                SetImages();
+//                for (File image : GetEventImages()) {
+//                    Toast.makeText(getApplicationContext(), image.toString(), Toast.LENGTH_LONG).show();
+//                }
+//                SetImages();
 
+                Intent photoPickerIntent = new Intent(Intent.ACTION_PICK);
+                photoPickerIntent.setType("image/*");
+                startActivityForResult(photoPickerIntent, 1);
+
+            }
+        });
+
+        final Bitmap[] bm = new Bitmap[1];
+        add_event.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (event_image.getDrawable() == null && event_image_2.getDrawable() == null && event_image_3.getDrawable() == null
+                        && event_image_4.getDrawable() == null){
+                    Toast.makeText(getApplicationContext(), "No images!", Toast.LENGTH_LONG).show();
+                    return;
+                }
+                if (event_image.getDrawable() != null){
+                    bm[0] = ((BitmapDrawable)event_image.getDrawable()).getBitmap();
+                    UploadImage(bm[0], 1);
+                }
+                if (event_image_2.getDrawable() != null){
+                    bm[0] = ((BitmapDrawable)event_image_2.getDrawable()).getBitmap();
+                    UploadImage(bm[0], 1);
+                }
+                if (event_image_3.getDrawable() != null){
+                    bm[0] = ((BitmapDrawable)event_image_3.getDrawable()).getBitmap();
+                    UploadImage(bm[0], 1);
+                }
+                if (event_image_4.getDrawable() != null){
+                    bm[0] = ((BitmapDrawable)event_image_4.getDrawable()).getBitmap();
+                    UploadImage(bm[0], 1);
+                }
             }
         });
 
@@ -164,6 +220,40 @@ public class AddEvent extends AppCompatActivity implements BaseSliderView.OnSlid
                         .show();
             }
         }
+
+        if (requestCode == 1)
+            if (resultCode == Activity.RESULT_OK) {
+
+
+                Uri selectedImage = data.getData();
+
+                String filePath = getPath(selectedImage);
+                String file_extn = filePath.substring(filePath.lastIndexOf(".") + 1);
+//                EIText.setText(filePath);
+
+                BitmapFactory.Options options = new BitmapFactory.Options();
+                options.inSampleSize = 4;
+                options.outWidth = 100;
+                options.outHeight = 200;
+
+                if (event_image.getDrawable() == null) {
+                    event_image.setImageBitmap(BitmapFactory.decodeFile(filePath, options));
+//                        Picasso.with(getApplicationContext()).load(UPLOADS_FOLDER+"Event1").into(event_image);
+                }
+                else if (event_image_2.getDrawable() == null){
+                    event_image_2.setImageBitmap(BitmapFactory.decodeFile(filePath, options));
+                }
+                else if (event_image_3.getDrawable() == null){
+                    event_image_3.setImageBitmap(BitmapFactory.decodeFile(filePath, options));
+                }
+                else if (event_image_4.getDrawable() == null){
+                    event_image_4.setImageBitmap(BitmapFactory.decodeFile(filePath, options));
+                }
+                else
+                    Toast.makeText(getApplicationContext(), "You can't add more pictures!", Toast.LENGTH_LONG).show();
+
+            }
+
     }
 
 
@@ -201,7 +291,20 @@ public class AddEvent extends AppCompatActivity implements BaseSliderView.OnSlid
             final Bitmap bitmap = BitmapFactory.decodeFile(fileUri.getPath(),
                     options);
 
-            event_image.setImageBitmap(bitmap);
+            if (event_image.getDrawable() == null) {
+                event_image.setImageBitmap(bitmap);
+            }
+            else if (event_image_2.getDrawable() == null){
+                event_image_2.setImageBitmap(bitmap);
+            }
+            else if (event_image_3.getDrawable() == null){
+                event_image_3.setImageBitmap(bitmap);
+            }
+            else if (event_image_4.getDrawable() == null){
+                event_image_4.setImageBitmap(bitmap);
+            }
+            else
+                Toast.makeText(getApplicationContext(), "You can't add more pictures!", Toast.LENGTH_LONG).show();
         } catch (NullPointerException e) {
             e.printStackTrace();
         }
@@ -211,6 +314,20 @@ public class AddEvent extends AppCompatActivity implements BaseSliderView.OnSlid
     /*
      * ------------ Helper Methods ----------------------
      * */
+
+
+
+
+    public String getPath(Uri uri) {
+        String[] projection = {MediaStore.MediaColumns.DATA};
+        Cursor cursor = managedQuery(uri, projection, null, null, null);
+        int column_index = cursor
+                .getColumnIndexOrThrow(MediaStore.MediaColumns.DATA);
+        cursor.moveToFirst();
+        String imagePath = cursor.getString(column_index);
+
+        return cursor.getString(column_index);
+    }
 
 
 
@@ -262,14 +379,15 @@ public class AddEvent extends AppCompatActivity implements BaseSliderView.OnSlid
 
         BitmapFactory.Options options = new BitmapFactory.Options();
         options.inSampleSize = 4;
-        options.outWidth = 200;
-        options.outHeight = 100;
+        options.outWidth = 100;
+        options.outHeight = 200;
 
 //        BitmapFactory.decodeStream()
 
         event_image.setImageBitmap(BitmapFactory.decodeFile(images[0].getPath(), options));
         event_image_2.setImageBitmap(BitmapFactory.decodeFile(images[1].getPath(), options));
         event_image_3.setImageBitmap(BitmapFactory.decodeFile(images[2].getPath(), options));
+        event_image_4.setImageBitmap(BitmapFactory.decodeFile(images[3].getPath(), options));
     }
 
 
@@ -320,6 +438,68 @@ public class AddEvent extends AppCompatActivity implements BaseSliderView.OnSlid
 
         return mediaFile;
     }
+
+
+    public String getStringImage(Bitmap bmp){
+        ByteArrayOutputStream baos = new ByteArrayOutputStream();
+        bmp.compress(Bitmap.CompressFormat.PNG, 100, baos);
+        byte[] imageBytes = baos.toByteArray();
+        return Base64.encodeToString(imageBytes, Base64.DEFAULT);
+    }
+
+
+
+    private void UploadImage(final Bitmap bitmap, final int imageNumber){
+        //Showing the progress dialog
+        final ProgressDialog loading = ProgressDialog.show(this,"Uploading...","Please wait...",false,false);
+        StringRequest stringRequest = new StringRequest(Request.Method.POST, UPLOAD_URL,
+                new Response.Listener<String>() {
+                    @Override
+                    public void onResponse(String s) {
+                        //Disimissing the progress dialog
+                        loading.dismiss();
+                        //Showing toast message of the response
+                        Toast.makeText(getApplicationContext(), "Success: " +s, Toast.LENGTH_LONG).show();
+                        Log.d("messg",s);
+                    }
+                },
+                new Response.ErrorListener() {
+                    @Override
+                    public void onErrorResponse(VolleyError volleyError) {
+                        //Dismissing the progress dialog
+                        loading.dismiss();
+
+                        //Showing toast
+                        Toast.makeText(getApplicationContext(), "eeee: " +volleyError.getMessage(), Toast.LENGTH_LONG).show();
+                    }
+                }){
+            @Override
+            protected Map<String, String> getParams() throws AuthFailureError {
+                //Converting Bitmap to String
+                String image = getStringImage(bitmap);
+
+
+                //Creating parameters
+                Map<String,String> params = new Hashtable<String, String>();
+
+                //Adding parameters
+                params.put("name", "Event1_Image"+imageNumber);
+                params.put("image", image);
+
+                //returning parameters
+                return params;
+            }
+        };
+
+        //Creating a Request Queue
+        RequestQueue requestQueue = Volley.newRequestQueue(this);
+
+        //Adding request to the queue
+        requestQueue.add(stringRequest);
+    }
+
+
+
 
 
     String RandomId (){

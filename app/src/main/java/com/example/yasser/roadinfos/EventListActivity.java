@@ -10,13 +10,25 @@ import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
+import android.widget.Toast;
 
+import com.android.volley.AuthFailureError;
+import com.android.volley.Request;
+import com.android.volley.RequestQueue;
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.StringRequest;
+import com.android.volley.toolbox.Volley;
+
+import java.util.Hashtable;
 import java.util.List;
+import java.util.Map;
 
 import static android.support.v4.app.NavUtils.navigateUpFromSameTask;
 
@@ -34,6 +46,8 @@ public class EventListActivity extends AppCompatActivity {
      * Whether or not the activity is in two-pane mode, i.e. running on a tablet
      * device.
      */
+
+    private String GET_EVENTS_URL ="http://192.168.1.2/RoadInfos/GetEvents.php";
     private boolean mTwoPane;
 
     @Override
@@ -164,4 +178,54 @@ public class EventListActivity extends AppCompatActivity {
             }
         }
     }
+
+
+
+
+    ////////////////////////
+    //// HELPER METHODS ////
+    ////////////////////////
+
+    private void DownloadImages (final String eventId){
+        StringRequest stringRequest = new StringRequest(Request.Method.POST, GET_EVENTS_URL,
+                new Response.Listener<String>() {
+                    @Override
+                    public void onResponse(String s) {
+
+                        //Showing toast message of the response
+                        Toast.makeText(getApplicationContext(), "Success: " +s, Toast.LENGTH_LONG).show();
+                        Log.d("messg",s);
+                    }
+                },
+                new Response.ErrorListener() {
+                    @Override
+                    public void onErrorResponse(VolleyError volleyError) {
+
+
+                        //Showing toast
+                        Toast.makeText(getApplicationContext(), "eeee: " +volleyError.getMessage(), Toast.LENGTH_LONG).show();
+                    }
+                }){
+            @Override
+            protected Map<String, String> getParams() throws AuthFailureError {
+
+                //Creating parameters
+                Map<String,String> params = new Hashtable<String, String>();
+
+                //Adding parameters
+                params.put("eventId", eventId);
+
+                //returning parameters
+                return params;
+            }
+        };
+
+        //Creating a Request Queue
+        RequestQueue requestQueue = Volley.newRequestQueue(this);
+
+        //Adding request to the queue
+        requestQueue.add(stringRequest);
+    }
+
+
 }
