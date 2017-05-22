@@ -13,6 +13,8 @@
     <uses-permission android:name="android.permission.WRITE_INTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
 
+
+
     <application
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
@@ -71,6 +73,20 @@
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="com.example.yasser.roadinfos.EventListActivity" />
         </activity>
+
+        <application
+            android:name=".com.example.yasser.roadinfos.MyApp"
+            android:allowBackup="true"
+            android:icon="@mipmap/ic_launcher"
+            android:label="@string/app_name"
+            android:supportsRtl="true"
+            android:theme="@style/AppTheme">
+
+
+        </application>
+
     </application>
+
+
 
 </manifest>

@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="utf-8"?><!-- Card ? -->
+
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:card_view="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical">
+    <!-- A CardView that contains a TextView -->
+    <android.support.v7.widget.CardView xmlns:card_view="http://schemas.android.com/apk/res-auto"
+        android:id="@+id/card_view"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        card_view:cardElevation="3dp"
+        card_view:cardCornerRadius="4dp">
+
+
+
+        <ImageView
+            android:id="@+id/imageLeft"
+            android:layout_width="250dp"
+            android:layout_height="150dp"
+            android:layout_gravity="start"
+            android:layout_margin="10dp"
+            android:layout_rowSpan="2"
+            android:scaleType="centerCrop"
+            />
+
+
+
+
+
+    </android.support.v7.widget.CardView>
+
+    <TextView
+        android:id="@+id/imageName"
+        style="@style/TextAppearance.AppCompat.Body1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="start"
+        android:layout_margin="10dp"
+        android:text="Image name" />
+
+    <android.support.design.widget.FloatingActionButton
+        android:id="@+id/deleteImageRV"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:layout_margin="10dp"
+        android:layout_marginBottom="20dp"
+        app:backgroundTint="#fff"
+        android:src="@drawable/rubbish_bin" />
+
+
+</LinearLayout>
+

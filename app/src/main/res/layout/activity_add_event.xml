@@ -10,9 +10,8 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="vertical"
         android:background="@drawable/pattern_bg_2"
-        >
+        android:orientation="vertical">
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -22,22 +21,21 @@
             <android.support.design.widget.TextInputLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_gravity="center"
-                >
+                android:layout_gravity="center">
 
                 <EditText
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:drawablePadding="10dp"
+                    android:drawableStart="@drawable/event_name"
                     android:hint="Event name"
                     android:textColor="@color/textPrimary"
-                    android:textSize="16sp"
-                    android:drawableStart="@drawable/event_name"
-                    android:drawablePadding="10dp"
-                    />
+                    android:textSize="16sp" />
 
             </android.support.design.widget.TextInputLayout>
 
         </LinearLayout>
+
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -47,23 +45,22 @@
             <android.support.design.widget.TextInputLayout
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_weight="3"
                 android:layout_gravity="center"
-                >
+                android:layout_weight="3">
 
                 <EditText
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:hint="Event description"
-                    android:textSize="16sp"
-                    android:textColor="@color/textPrimary"
-                    android:drawableStart="@drawable/description"
                     android:drawablePadding="10dp"
-                    />
+                    android:drawableStart="@drawable/description"
+                    android:hint="Event description"
+                    android:textColor="@color/textPrimary"
+                    android:textSize="16sp" />
 
             </android.support.design.widget.TextInputLayout>
 
         </LinearLayout>
+
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -75,17 +72,15 @@
                 android:layout_gravity="center"
                 android:layout_weight="2"
                 android:text="Event Type :"
-                android:textSize="16sp"
                 android:textColor="@color/textPrimary"
-                />
+                android:textSize="16sp" />
 
             <Spinner
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="3"
                 android:entries="@array/event_types"
-                android:textColor="@color/textPrimary"
-                />
+                android:textColor="@color/textPrimary" />
 
         </LinearLayout>
 
@@ -96,99 +91,37 @@
             android:layout_gravity="center"
             android:layout_marginTop="20dp"
             android:background="@color/colorPrimary"
-            android:textColor="@color/textSecondary"
+            android:drawablePadding="10dp"
+            android:drawableStart="@drawable/camera"
             android:padding="5dp"
             android:text="PICK FROM GALLERY"
-            android:textSize="20sp"
-            android:drawableStart="@drawable/camera"
-            android:drawablePadding="10dp"
-            />
+            android:textColor="@color/textSecondary"
+            android:textSize="20sp" />
 
         <Button
             android:id="@+id/takePicture"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
+            android:layout_marginBottom="20dp"
             android:layout_marginTop="20dp"
             android:background="@color/colorPrimary"
-            android:textColor="@color/textSecondary"
+            android:drawablePadding="10dp"
+            android:drawableStart="@drawable/camera"
             android:padding="5dp"
             android:text="Take a picture"
-            android:textSize="20sp"
-            android:drawableStart="@drawable/camera"
-            android:drawablePadding="10dp"
-            />
+            android:textColor="@color/textSecondary"
+            android:textSize="20sp" />
 
-        <LinearLayout
-            android:layout_marginTop="10dp"
-            android:layout_marginBottom="20dp"
+
+        <android.support.v7.widget.RecyclerView
+            android:id="@+id/eventImagesRV"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="vertical">
-
-            <ImageView
-                android:id="@+id/eventImage"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center"
-                android:layout_marginStart="16dp"
-                android:layout_marginEnd="16dp"
-                android:layout_marginBottom="10dp"
-                android:scaleType="fitXY"
-                android:adjustViewBounds="true"
-                />
-
-
-
-            <ImageView
-                android:id="@+id/eventImage2"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center"
-                android:layout_marginStart="16dp"
-                android:layout_marginEnd="16dp"
-                android:layout_marginBottom="10dp"
-                android:scaleType="fitXY"
-                android:adjustViewBounds="true"
-                />
-
-
-
-            <ImageView
-                android:id="@+id/eventImage3"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center"
-                android:layout_marginStart="16dp"
-                android:layout_marginEnd="16dp"
-                android:layout_marginBottom="10dp"
-                android:scaleType="fitXY"
-                android:adjustViewBounds="true"
-                />
-
-
-            <ImageView
-                android:id="@+id/eventImage4"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center"
-                android:layout_marginStart="16dp"
-                android:layout_marginEnd="16dp"
-                android:layout_marginBottom="10dp"
-                android:scaleType="fitXY"
-                android:adjustViewBounds="true"
-                />
-
-        </LinearLayout>
-
-
-        <com.daimajia.slider.library.SliderLayout
-            android:id="@+id/eventImagesSlider"
-            android:layout_width="match_parent"
-            android:layout_height="150dp"
-            />
-
-
+            android:background="#fff"
+            android:clipToPadding="false"
+            android:scrollbars="vertical"
+            tools:listitem="@layout/album_card" />
 
 
         <Button
@@ -196,34 +129,125 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
-            android:layout_marginTop="20dp"
             android:layout_marginBottom="20dp"
+            android:layout_marginTop="20dp"
             android:background="@color/colorPrimary"
-            android:text="Add event"
             android:padding="10dp"
+            android:text="Add event"
             android:textColor="@color/textSecondary"
-            android:textSize="20sp"
-            />
+            android:textSize="20sp" />
 
     </LinearLayout>
 
 </ScrollView>
 
+    <!-- <GridLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="20dp"
+            android:layout_marginTop="10dp"
+            android:columnCount="2"
+            android:rowCount="4">
 
-    <!--<ImageButton-->
-    <!--android:id="@+id/deleteEventImage"-->
-    <!--android:layout_gravity="center"-->
-    <!--android:layout_width="0dp"-->
-    <!--android:layout_weight="1"-->
-    <!--android:layout_height="wrap_content"-->
-    <!--android:src="@drawable/delete"-->
-    <!--android:background="?android:selectableItemBackground"-->
-    <!--/>-->
+            <ImageView
+                android:id="@+id/eventImage"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_column="0"
+                android:layout_gravity="center"
+                android:layout_marginBottom="10dp"
+                android:layout_marginStart="16dp"
+                android:layout_row="0"
+                android:adjustViewBounds="true"
+                android:scaleType="fitXY" />
 
-<!--<com.daimajia.slider.library.Indicators.PagerIndicator-->
-<!--android:id="@+id/slider_indicator"-->
-<!--android:layout_width="wrap_content"-->
-<!--android:layout_height="wrap_content"-->
-<!--android:gravity="center"-->
-<!--android:layout_gravity="center"-->
-    <!--/>-->
+            <ImageButton
+                android:id="@+id/delEventImage"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_column="1"
+                android:layout_gravity="center"
+                android:layout_marginEnd="10dp"
+                android:layout_row="0"
+                android:background="?android:selectableItemBackground"
+                android:src="@drawable/delete"
+                android:visibility="gone" />
+
+
+            <ImageView
+                android:id="@+id/eventImage2"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_column="0"
+                android:layout_gravity="center"
+                android:layout_marginBottom="10dp"
+                android:layout_marginStart="16dp"
+                android:layout_row="1"
+                android:adjustViewBounds="true"
+                android:scaleType="fitXY" />
+
+            <ImageButton
+                android:id="@+id/delEventImage2"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_column="1"
+                android:layout_gravity="center"
+                android:layout_marginEnd="10dp"
+                android:layout_row="1"
+                android:background="?android:selectableItemBackground"
+                android:src="@drawable/delete"
+                android:visibility="gone" />
+
+            <ImageView
+                android:id="@+id/eventImage3"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_column="0"
+                android:layout_gravity="center"
+                android:layout_marginBottom="10dp"
+                android:layout_marginStart="16dp"
+                android:layout_row="2"
+                android:adjustViewBounds="true"
+                android:scaleType="fitXY" />
+
+            <ImageButton
+                android:id="@+id/delEventImage3"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_column="1"
+                android:layout_gravity="center"
+                android:layout_marginEnd="10dp"
+                android:layout_row="2"
+                android:background="?android:selectableItemBackground"
+                android:src="@drawable/delete"
+                android:visibility="gone" />
+
+            <ImageView
+                android:id="@+id/eventImage4"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_column="0"
+                android:layout_gravity="center"
+                android:layout_marginBottom="10dp"
+                android:layout_marginStart="16dp"
+                android:layout_row="3"
+                android:adjustViewBounds="true"
+                android:scaleType="fitXY" />
+
+            <ImageButton
+                android:id="@+id/delEventImage4"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_column="1"
+                android:layout_gravity="center"
+                android:layout_marginEnd="10dp"
+                android:layout_row="3"
+                android:background="?android:selectableItemBackground"
+                android:src="@drawable/delete"
+                android:visibility="gone" />
+
+        </GridLayout> -->
+
+    <!-- <ImageButton--><!--android:id="@+id/deleteEventImage"--><!--android:layout_gravity="center"--><!--android:layout_width="0dp"--><!--android:layout_weight="1"--><!--android:layout_height="wrap_content"--><!--android:src="@drawable/delete"--><!--android:background="?android:selectableItemBackground"--><!--/> -->
+
+    <!--<com.daimajia.slider.library.Indicators.PagerIndicator--><!--android:id="@+id/slider_indicator"--><!--android:layout_width="wrap_content"--><!--android:layout_height="wrap_content"--><!--android:gravity="center"--><!--android:layout_gravity="center"--><!--/>-->

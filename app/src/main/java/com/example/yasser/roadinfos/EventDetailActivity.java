@@ -6,11 +6,13 @@ import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.ImageView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.android.volley.AuthFailureError;
@@ -24,15 +26,20 @@ import com.android.volley.toolbox.Volley;
 import java.util.Hashtable;
 import java.util.Map;
 
+import static com.example.yasser.roadinfos.EventData.GetEvents;
+import static com.example.yasser.roadinfos.EventDetailFragment.ARG_ITEM_ID;
+
 /**
- * An activity representing a single Event detail screen. This
+ * An activity representing a single EventData detail screen. This
  * activity is only used narrow width devices. On tablet-size devices,
  * item details are presented side-by-side with a list of items
  * in a {@link EventListActivity}.
  */
 public class EventDetailActivity extends AppCompatActivity {
 
-    private ImageView event_image, event_image_2, event_image_3, event_image_4;
+    private EventData event;
+    TextView ed_title, ed_date, ed_type, ed_place, ed_desc;
+    RecyclerView ed_images;
 
     private String DOWNLOAD_URL ="http://192.168.1.2/RoadInfos/GetEventImages.php";
 
@@ -43,10 +50,15 @@ public class EventDetailActivity extends AppCompatActivity {
         Toolbar toolbar = (Toolbar) findViewById(R.id.detail_toolbar);
         setSupportActionBar(toolbar);
 
-        event_image = (ImageView) findViewById(R.id.detailEventImage);
-        event_image_2 = (ImageView) findViewById(R.id.detailEventImage2);
-        event_image_3 = (ImageView) findViewById(R.id.detailEventImage3);
-        event_image_4 = (ImageView) findViewById(R.id.detailEventImage4);
+        ed_title = (TextView) findViewById(R.id.eventDetailTitle);
+        ed_date = (TextView) findViewById(R.id.eventDetailDate);
+        ed_type = (TextView) findViewById(R.id.eventDetailType);
+        ed_place = (TextView) findViewById(R.id.eventDetailPlace);
+        ed_desc = (TextView) findViewById(R.id.eventDetailDesc);
+
+        ed_images = (RecyclerView) findViewById(R.id.eventDetailImagesRV);
+        RecyclerView.LayoutManager manager = new LinearLayoutManager(getApplicationContext());
+        ed_images.setLayoutManager(manager);
 
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.event_detail_fab);
         fab.setOnClickListener(new View.OnClickListener() {
@@ -61,7 +73,21 @@ public class EventDetailActivity extends AppCompatActivity {
         ActionBar actionBar = getSupportActionBar();
         if (actionBar != null) {
             actionBar.setDisplayHomeAsUpEnabled(true);
-            actionBar.setTitle("Event 1");
+            actionBar.setTitle("EventData 1");
+        }
+
+        Intent intent = getIntent();
+        int eventId = intent.getIntExtra(ARG_ITEM_ID, 0);
+
+        EventListActivity activity = new EventListActivity();
+        event = GetEvents(getApplicationContext(), 1).get(eventId);
+
+        if (event != null) {
+            ed_title.setText(event.getEventName());
+            ed_date.setText(event.getEventDate());
+            ed_type.setText(event.getEventType());
+            ed_place.setText(event.getEventPlace());
+            ed_desc.setText(event.getEventDesc());
         }
 
         // savedInstanceState is non-null when there is fragment state
@@ -77,8 +103,8 @@ public class EventDetailActivity extends AppCompatActivity {
             // Create the detail fragment and add it to the activity
             // using a fragment transaction.
             Bundle arguments = new Bundle();
-            arguments.putString(EventDetailFragment.ARG_ITEM_ID,
-                    getIntent().getStringExtra(EventDetailFragment.ARG_ITEM_ID));
+            arguments.putInt(ARG_ITEM_ID,
+                    getIntent().getIntExtra(ARG_ITEM_ID, 0));
             EventDetailFragment fragment = new EventDetailFragment();
             fragment.setArguments(arguments);
             getSupportFragmentManager().beginTransaction()

@@ -18,39 +18,67 @@
             android:gravity="center"
             android:text="What kind of emergency are you in ?" />
 
-        <LinearLayout
-            android:layout_width="match_parent"
+        <GridLayout
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginBottom="20dp"
-            android:orientation="horizontal">
+            android:orientation="horizontal"
+            android:layout_gravity="center"
+            android:rowCount="2"
+            android:columnCount="3"
+            >
 
 
                 <ImageButton
                     android:id="@+id/accidentEm"
-                    android:layout_width="0dp"
-                    android:layout_weight="1"
+                    android:layout_row="0"
+                    android:layout_column="0"
+                    android:layout_width="wrap_content"
                     android:layout_margin="5dp"
+                    android:layout_marginRight="20dp"
                     android:layout_height="wrap_content"
                     android:src="@drawable/accident_2"
                     android:background="?android:selectableItemBackground"
                     android:scaleType="fitCenter"
                     />
+                <TextView
+                    android:layout_height="2dp"
+                    android:layout_width="70dp"
+                    android:layout_column="0"
+                    android:layout_row="1"
+                    android:layout_marginRight="20dp"
+                    android:background="@color/colorPrimary"
+                    android:visibility="gone"
+                />
 
                 <ImageButton
                     android:id="@+id/medicalEm"
-                    android:layout_width="0dp"
-                    android:layout_weight="1"
+                    android:layout_row="0"
+                    android:layout_column="1"
+                    android:layout_width="wrap_content"
                     android:layout_margin="5dp"
+                    android:layout_marginRight="20dp"
                     android:layout_height="wrap_content"
-                    android:src="@drawable/syringe"
+                    android:src="@drawable/syringe_2"
                     android:background="?android:selectableItemBackground"
                     android:scaleType="fitCenter"
                     />
 
+                <TextView
+                    android:layout_height="2dp"
+                    android:layout_width="70dp"
+                    android:layout_column="1"
+                    android:layout_row="1"
+                    android:layout_marginRight="20dp"
+                    android:background="@color/colorPrimary"
+                    android:visibility="gone"
+                />
+
                 <ImageButton
                     android:id="@+id/assaultEm"
-                    android:layout_width="0dp"
-                    android:layout_weight="1"
+                    android:layout_row="0"
+                    android:layout_column="2"
+                    android:layout_width="wrap_content"
                     android:layout_margin="5dp"
                     android:layout_height="wrap_content"
                     android:src="@drawable/assault"
@@ -58,9 +86,17 @@
                     android:scaleType="fitCenter"
                     />
 
+                <TextView
+                    android:layout_height="2dp"
+                    android:layout_width="70dp"
+                    android:layout_column="2"
+                    android:layout_row="1"
+                    android:layout_marginRight="20dp"
+                    android:background="@color/colorPrimary"
+                    android:visibility="gone"
+                />
 
-
-        </LinearLayout>
+        </GridLayout>
 
         <TextView
             android:id="@+id/currentEmergency"

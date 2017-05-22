@@ -6,6 +6,7 @@ import android.app.Fragment;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.graphics.PorterDuff;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.design.widget.NavigationView;
@@ -16,6 +17,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
@@ -105,7 +107,7 @@ public class WelcomeActivity extends AppCompatActivity {
 
 
 
-//        final CharSequence[] pickerItemsSequence = pickerItems.toArray(new CharSequence[pickerItems.size()]);
+
 
         DrawerLayout.LayoutParams params = new DrawerLayout.LayoutParams
                 (ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
@@ -183,6 +185,12 @@ public class WelcomeActivity extends AppCompatActivity {
         accident_em.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+//                if (medical_em.getDrawable() == getDrawable(R.drawable.syringe_clicked))
+//                    medical_em.setImageDrawable(getDrawable(R.drawable.syringe));
+//                if (assault_em.getDrawable() == getDrawable(R.drawable.assault_clicked))
+//                    assault_em.setImageDrawable(getDrawable(R.drawable.assault));
+//                v.setBackground(getDrawable(R.color.gradient_start));
+//                ((ImageButton)v).setImageResource(R.drawable.accident_2_clicked);
                 current_em.setText("Accident");
             }
         });
@@ -190,6 +198,12 @@ public class WelcomeActivity extends AppCompatActivity {
         medical_em.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+//                if (accident_em.getDrawable() == getDrawable(R.drawable.accident_2_clicked))
+//                    accident_em.setImageDrawable(getDrawable(R.drawable.accident_2));
+//                if (assault_em.getDrawable() == getDrawable(R.drawable.assault_clicked))
+//                    assault_em.setImageDrawable(getDrawable(R.drawable.assault));
+//                v.setBackground(getDrawable(R.color.gradient_start));
+//                ((ImageButton)v).setImageResource(R.drawable.syringe_clicked);
                 current_em.setText("Medical Emergency");
             }
         });
@@ -197,7 +211,40 @@ public class WelcomeActivity extends AppCompatActivity {
         assault_em.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+//                if (medical_em.getDrawable() == getDrawable(R.drawable.syringe_clicked))
+//                    medical_em.setImageDrawable(getDrawable(R.drawable.syringe));
+//                if (accident_em.getDrawable() == getDrawable(R.drawable.accident_2_clicked))
+//                    accident_em.setImageDrawable(getDrawable(R.drawable.accident_2));
+//                v.setBackground(getDrawable(R.color.gradient_start));
+//                ((ImageButton)v).setImageResource(R.drawable.assault_clicked);
                 current_em.setText("Assault");
+            }
+        });
+
+        accident_em.setOnTouchListener(new View.OnTouchListener() {
+            @Override
+            public boolean onTouch(View v, MotionEvent event) {
+                switch (event.getAction()) {
+                    case MotionEvent.ACTION_DOWN: {
+                        ImageButton view = (ImageButton ) v;
+                        view.getBackground().setColorFilter(0x77000000, PorterDuff.Mode.SRC_ATOP);
+                        v.invalidate();
+                        break;
+                    }
+                    case MotionEvent.ACTION_UP:
+
+                        // Your action here on button click
+
+                        current_em.setText("Accident");
+
+                    case MotionEvent.ACTION_CANCEL: {
+                        ImageButton view = (ImageButton) v;
+                        view.getBackground().clearColorFilter();
+                        view.invalidate();
+                        break;
+                    }
+                }
+                return true;
             }
         });
 

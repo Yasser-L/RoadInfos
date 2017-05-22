@@ -58,78 +58,69 @@
         android:orientation="vertical"
         >
 
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="16dp"
+            >
+
+            <TextView
+                android:id="@+id/eventDetailTitle"
+                android:layout_width="wrap_content"
+                android:layout_weight="1"
+                android:layout_height="wrap_content"
+                android:text="Title"
+                style="@style/TextAppearance.AppCompat.Medium"
+                />
+
+            <TextView
+                android:id="@+id/eventDetailDate"
+                android:layout_width="wrap_content"
+                android:layout_weight="2"
+                android:layout_height="wrap_content"
+                android:text="0/0/0"
+                android:textAlignment="center"
+                />
+
+        </LinearLayout>
+
         <TextView
-            android:id="@+id/detailEventTitle"
-            android:layout_width="wrap_content"
+            android:id="@+id/eventDetailType"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Title"
-            style="@style/TextAppearance.AppCompat.Display1"
+            style="@style/TextAppearance.AppCompat.Body1"
             android:layout_margin="16dp"
-            android:background="@color/colorAccent"
+            android:text="Type: "
             />
 
         <TextView
-            android:id="@+id/detailEventDesc"
-            android:layout_width="wrap_content"
+            android:id="@+id/eventDetailPlace"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            style="@style/TextAppearance.AppCompat.Medium"
-            android:text="Desc Desc Desc Desc Desc Desc Desc Desc Desc."
+            style="@style/TextAppearance.AppCompat.Body1"
+            android:layout_margin="16dp"
+            android:text="Place: "
+            />
+
+        <TextView
+            android:id="@+id/eventDetailDesc"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="fill_horizontal"
+            style="@style/TextAppearance.AppCompat.Body1"
+            android:text="Desc"
             android:layout_margin="16dp"
             />
 
 
-        <ImageView
-            android:id="@+id/detailEventImage"
+        <android.support.v7.widget.RecyclerView
+            android:id="@+id/eventDetailImagesRV"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:layout_marginStart="16dp"
-            android:layout_marginEnd="16dp"
-            android:layout_marginBottom="10dp"
-            android:scaleType="fitXY"
-            android:adjustViewBounds="true"
-            />
-
-
-
-        <ImageView
-            android:id="@+id/detailEventImage2"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:layout_marginStart="16dp"
-            android:layout_marginEnd="16dp"
-            android:layout_marginBottom="10dp"
-            android:scaleType="fitXY"
-            android:adjustViewBounds="true"
-            />
-
-
-
-        <ImageView
-            android:id="@+id/detailEventImage3"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:layout_marginStart="16dp"
-            android:layout_marginEnd="16dp"
-            android:layout_marginBottom="10dp"
-            android:scaleType="fitXY"
-            android:adjustViewBounds="true"
-            />
-
-
-        <ImageView
-            android:id="@+id/detailEventImage4"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:layout_marginStart="16dp"
-            android:layout_marginEnd="16dp"
-            android:layout_marginBottom="10dp"
-            android:scaleType="fitXY"
-            android:adjustViewBounds="true"
-            />
+            android:background="#fff"
+            android:clipToPadding="false"
+            android:scrollbars="vertical"
+            tools:listitem="@layout/album_card" />
 
     </LinearLayout>
 

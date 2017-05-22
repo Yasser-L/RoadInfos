@@ -15,6 +15,7 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.View;
+import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.ExpandableListView;
@@ -59,6 +60,8 @@ public class Signup2 extends AppCompatActivity{
         c_name = (TextView) findViewById(R.id.contact_name);
         c_number = (TextView) findViewById(R.id.contact_number);
         View contactRow = findViewById(R.id.contactRow);
+
+        getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_HIDDEN);
 
         ECRecyclerView = (RecyclerView) findViewById(R.id.ECRecyclerView);
         RecyclerView.LayoutManager contactsLM = new LinearLayoutManager(getApplicationContext());

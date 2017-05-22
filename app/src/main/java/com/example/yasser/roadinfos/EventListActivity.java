@@ -5,7 +5,6 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.RecyclerView;
@@ -26,11 +25,18 @@ import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.util.ArrayList;
 import java.util.Hashtable;
 import java.util.List;
 import java.util.Map;
 
 import static android.support.v4.app.NavUtils.navigateUpFromSameTask;
+import static com.example.yasser.roadinfos.EventData.GetEvents;
+import static com.example.yasser.roadinfos.EventDetailFragment.ARG_ITEM_ID;
 
 /**
  * An activity representing a list of Events. This activity
@@ -42,13 +48,9 @@ import static android.support.v4.app.NavUtils.navigateUpFromSameTask;
  */
 public class EventListActivity extends AppCompatActivity {
 
-    /**
-     * Whether or not the activity is in two-pane mode, i.e. running on a tablet
-     * device.
-     */
-
-    private String GET_EVENTS_URL ="http://192.168.1.2/RoadInfos/GetEvents.php";
+//    static Context context = MyApp.GetGlobalContext();
     private boolean mTwoPane;
+    public List<EventData> LIST = new ArrayList<>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -59,12 +61,18 @@ public class EventListActivity extends AppCompatActivity {
         setSupportActionBar(toolbar);
         toolbar.setTitle(getTitle());
 
-        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.addEvent2);
-        fab.setOnClickListener(new View.OnClickListener() {
+        /*
+      Whether or not the activity is in two-pane mode, i.e. running on a tablet
+      device.
+     */
+        FloatingActionButton add_event = (FloatingActionButton) findViewById(R.id.addEvent2);
+        add_event.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-                        .setAction("Action", null).show();
+
+                startActivity(new Intent(getApplicationContext(), AddEvent.class));
+//                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
+//                        .setAction("Action", null).show();
             }
         });
         // Show the Up button in the action bar.
@@ -104,15 +112,22 @@ public class EventListActivity extends AppCompatActivity {
     }
 
     private void setupRecyclerView(@NonNull RecyclerView recyclerView) {
-        recyclerView.setAdapter(new SimpleItemRecyclerViewAdapter(EventsContent.EVENTS));
+        Log.d("EventListActivity 107", "Entered");
+        if (GetEvents(getApplicationContext(), 1) != null && GetEvents(getApplicationContext(), 1).size() != 0) {
+            Log.d("115", "setupRecyclerView: EventList works");
+            recyclerView.setAdapter(new SimpleItemRecyclerViewAdapter(GetEvents(getApplicationContext(), 1)));
+        }
+//        recyclerView.setAdapter(new SimpleItemRecyclerViewAdapter(response()));
     }
 
     public class SimpleItemRecyclerViewAdapter
             extends RecyclerView.Adapter<SimpleItemRecyclerViewAdapter.ViewHolder> {
 
-        private final List<EventsContent.Event> mValues;
+        private final List<EventData> mValues;
 
-        public SimpleItemRecyclerViewAdapter(List<EventsContent.Event> items) {
+        public SimpleItemRecyclerViewAdapter(List<EventData> items) {
+            Log.d("EventListActivity 117:", "Entered");
+//            response();
             mValues = items;
         }
 
@@ -126,16 +141,16 @@ public class EventListActivity extends AppCompatActivity {
         @Override
         public void onBindViewHolder(final ViewHolder holder, int position) {
             holder.mItem = mValues.get(position);
-            holder.mIdView.setText(mValues.get(position).id);
-            holder.mContentView.setText(mValues.get(position).title);
-            holder.mTypeView.setText(mValues.get(position).type);
+            holder.eventType.setText(mValues.get(position).getEventType());
+            holder.eventPlace.setText(mValues.get(position).getEventPlace());
+            holder.eventDate.setText(mValues.get(position).getEventDate());
 
             holder.mView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
                     if (mTwoPane) {
                         Bundle arguments = new Bundle();
-                        arguments.putString(EventDetailFragment.ARG_ITEM_ID, holder.mItem.id);
+                        arguments.putInt(ARG_ITEM_ID, holder.mItem.getId());
                         EventDetailFragment fragment = new EventDetailFragment();
                         fragment.setArguments(arguments);
                         getSupportFragmentManager().beginTransaction()
@@ -144,7 +159,7 @@ public class EventListActivity extends AppCompatActivity {
                     } else {
                         Context context = v.getContext();
                         Intent intent = new Intent(context, EventDetailActivity.class);
-                        intent.putExtra(EventDetailFragment.ARG_ITEM_ID, holder.mItem.id);
+                        intent.putExtra(ARG_ITEM_ID, holder.mItem.getId());
 
                         context.startActivity(intent);
                     }
@@ -154,66 +169,106 @@ public class EventListActivity extends AppCompatActivity {
 
         @Override
         public int getItemCount() {
+            if (mValues == null) {
+                Log.d("mValues size = null", "Entered");
+                return 0;
+            }
             return mValues.size();
         }
 
         public class ViewHolder extends RecyclerView.ViewHolder {
             public final View mView;
-            public final TextView mIdView;
-            public final TextView mContentView;
-            public final TextView mTypeView;
-            public EventsContent.Event mItem;
+            public final TextView eventType;
+            public final TextView eventPlace;
+            public final TextView eventDate;
+            public EventData mItem;
 
             public ViewHolder(View view) {
                 super(view);
                 mView = view;
-                mIdView = (TextView) view.findViewById(R.id.eventTitle);
-                mContentView = (TextView) view.findViewById(R.id.eventDesc);
-                mTypeView = (TextView) view.findViewById(R.id.eventType);
+                eventType = (TextView) view.findViewById(R.id.eventType);
+                eventPlace = (TextView) view.findViewById(R.id.eventPlace);
+                eventDate = (TextView) view.findViewById(R.id.eventDate);
             }
 
             @Override
             public String toString() {
-                return super.toString() + " '" + mContentView.getText() + "'";
+                return super.toString() + " '" + eventType.getText() + "'";
             }
         }
     }
-
-
 
 
     ////////////////////////
     //// HELPER METHODS ////
     ////////////////////////
 
-    private void DownloadImages (final String eventId){
+
+     public List<EventData> response() {
+
+        String GET_EVENTS_URL = "http://192.168.1.7/RoadInfos/GetEvents.php";
+
+        final String[] res = new String[1];
+
         StringRequest stringRequest = new StringRequest(Request.Method.POST, GET_EVENTS_URL,
                 new Response.Listener<String>() {
                     @Override
                     public void onResponse(String s) {
-
+                        //Disimissing the progress dialog
                         //Showing toast message of the response
-                        Toast.makeText(getApplicationContext(), "Success: " +s, Toast.LENGTH_LONG).show();
-                        Log.d("messg",s);
+                        res[0] = s;
+                        Log.d("response", res[0]);
+                        try {
+//                            JSONObject object = new JSONObject();
+                            JSONArray array = new JSONArray(delete_first_char(res[0]));
+                            for (int i = 0; i < array.length(); i++) {
+                                Log.d("Inside jsonarray", "Entered");
+
+                                JSONObject responseObject = array.getJSONObject(i);
+
+                                String eventId = responseObject.getString("Id");
+                                String eventName = responseObject.getString("EventName");
+                                String eventDesc = responseObject.getString("EventDesc");
+                                String eventType = responseObject.getString("EventType");
+                                String eventDate = responseObject.getString("EventDate");
+                                String eventPlace = responseObject.getString("EventPlace");
+                                String eventLocX = responseObject.getString("EventLocationX");
+                                String eventLocY = responseObject.getString("EventLocationY");
+                                String validated = responseObject.getString("Validated");
+
+                                EventData event = new EventData(Integer.parseInt(eventId), 1, eventName, eventDesc, eventType, eventDate, eventPlace, eventLocX, eventLocY, validated);
+
+                                LIST.add(event);
+                        }}catch (JSONException e){
+                            Toast.makeText(getApplicationContext(), e.getMessage(), Toast.LENGTH_LONG).show();
+
+                        }
+
+
+                            Toast.makeText(getApplicationContext(), "Success: " + s, Toast.LENGTH_LONG).show();
+                        Log.d("Mmessage", s);
                     }
                 },
                 new Response.ErrorListener() {
                     @Override
                     public void onErrorResponse(VolleyError volleyError) {
-
+                        //Dismissing the progress dialog
 
                         //Showing toast
-                        Toast.makeText(getApplicationContext(), "eeee: " +volleyError.getMessage(), Toast.LENGTH_LONG).show();
+                        Log.d("MmessageError", volleyError.getMessage());
+                        Toast.makeText(getApplicationContext(), "eeee: " + volleyError.getMessage(), Toast.LENGTH_LONG).show();
                     }
-                }){
+                }) {
             @Override
             protected Map<String, String> getParams() throws AuthFailureError {
+                //Converting Bitmap to String
+
 
                 //Creating parameters
-                Map<String,String> params = new Hashtable<String, String>();
+                Map<String, String> params = new Hashtable<String, String>();
 
                 //Adding parameters
-                params.put("eventId", eventId);
+                params.put("userId", "1");
 
                 //returning parameters
                 return params;
@@ -223,9 +278,33 @@ public class EventListActivity extends AppCompatActivity {
         //Creating a Request Queue
         RequestQueue requestQueue = Volley.newRequestQueue(this);
 
+
         //Adding request to the queue
         requestQueue.add(stringRequest);
+
+//        final Handler handler = new Handler();
+//        handler.postDelayed(new Runnable() {
+//            @Override
+//            public void run() {
+//                //Do something after 100ms
+//                Log.d("MmessageError", LIST.size()+"");
+//            }
+//        }, 1000);
+
+
+        return LIST;
     }
 
+    public static String delete_first_char(String string) {
+
+        String rephrase = null;
+        if (string != null && string.length() > 1) {
+            rephrase = string.substring(1, string.length());
+        }
+
+        return rephrase;
+    }
 
 }
+
+

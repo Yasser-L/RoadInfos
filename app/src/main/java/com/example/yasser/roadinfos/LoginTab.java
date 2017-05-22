@@ -7,6 +7,7 @@ import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.EditText;
 
@@ -25,6 +26,8 @@ public class LoginTab extends Fragment {
         pwET = (EditText) rootView.findViewById(R.id.pwET);
         loginButton = (Button) rootView.findViewById(R.id.loginButton);
         context = getActivity();
+
+        getActivity().getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_HIDDEN);
 
         this.loginButton.setOnClickListener(new View.OnClickListener() {
             @Override
