@@ -1,9 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:card_view="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:orientation="vertical"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content">
+    android:layout_height="wrap_content"
+    tools:context=".AddEvent">
 
     <android.support.v7.widget.CardView
         android:id="@+id/card_view"
@@ -12,62 +14,37 @@
         android:layout_gravity="center"
         android:padding="5dp"
         android:layout_margin="@dimen/card_margin"
-        android:elevation="3dp"
+        android:elevation="5dp"
         card_view:cardCornerRadius="@dimen/card_album_radius">
 
-        <LinearLayout
+        <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             >
 
             <ImageView
                 android:id="@+id/thumbnail"
-                android:layout_width="0dp"
-                android:layout_weight="7"
-                android:layout_height="100dp"
+                android:layout_width="200dp"
+                android:layout_alignParentTop="true"
+                android:layout_height="200dp"
                 android:background="?attr/selectableItemBackgroundBorderless"
                 android:clickable="true"
                 android:scaleType="fitXY" />
 
-            <LinearLayout
-                android:layout_width="0dp"
-                android:layout_weight="6"
-                android:layout_height="match_parent"
-                android:layout_row="0"
-                android:layout_column="1"
-                android:layout_gravity="fill_horizontal"
-                android:orientation="vertical"
-                >
-
-                <ImageView
-                    android:id="@+id/overflow"
-                    android:layout_width="64px"
-                    android:layout_height="64px"
-                    android:layout_gravity="end"
-                    android:layout_margin="5dp"
-                    android:src="@drawable/remove_symbol" />
-
-                <TextView
-                    android:id="@+id/album_title"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center"
-                    android:layout_margin="5dp"
-                    android:paddingLeft="@dimen/album_title_padding"
-                    android:paddingRight="@dimen/album_title_padding"
-                    android:textColor="@color/album_title"
-                    android:textSize="@dimen/album_title" />
-
-
-
-
-            </LinearLayout>
+            <!--<ImageView-->
+                <!--android:id="@+id/overflow"-->
+                <!--android:layout_alignEnd="@id/thumbnail"-->
+                <!--android:layout_width="64px"-->
+                <!--android:layout_height="64px"-->
+                <!--android:layout_gravity="end"-->
+                <!--android:layout_margin="5dp"-->
+                <!--android:src="@drawable/remove_symbol" />-->
 
 
 
 
 
-        </LinearLayout>
+        </RelativeLayout>
 
     </android.support.v7.widget.CardView>
 

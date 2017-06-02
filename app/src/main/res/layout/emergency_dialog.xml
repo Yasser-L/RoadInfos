@@ -1,12 +1,49 @@
 <?xml version="1.0" encoding="utf-8"?>
 <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical">
+
+        <android.support.v7.widget.CardView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:cardElevation="3dp"
+            android:layout_margin="20dp"
+            >
+
+            <RelativeLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                >
+
+                <ProgressBar
+                    android:id="@+id/emProgressBar"
+                    style="@style/Base.Widget.AppCompat.ProgressBar.Horizontal"
+                    android:layout_gravity="center"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:scaleY="8" />
+
+                <TextView
+                    android:id="@+id/pbText"
+                    android:text="Progress"
+                    android:textSize="16sp"
+                    android:textColor="@color/colorPrimaryDark"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentStart="true"
+                    android:layout_alignParentEnd="true"
+                    android:layout_centerVertical="true"
+                    android:gravity="center" />
+
+            </RelativeLayout>
+        </android.support.v7.widget.CardView>
+
 
         <TextView
             style="@style/TextAppearance.AppCompat.Light.SearchResult.Title"
@@ -18,15 +55,16 @@
             android:gravity="center"
             android:text="What kind of emergency are you in ?" />
 
-        <GridLayout
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="20dp"
-            android:orientation="horizontal"
-            android:layout_gravity="center"
-            android:rowCount="2"
-            android:columnCount="3"
-            >
+
+            <GridLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="20dp"
+                android:layout_marginBottom="20dp"
+                android:orientation="horizontal"
+                android:layout_gravity="center"
+                android:rowCount="2"
+                android:columnCount="3">
 
 
                 <ImageButton
@@ -39,17 +77,17 @@
                     android:layout_height="wrap_content"
                     android:src="@drawable/accident_2"
                     android:background="?android:selectableItemBackground"
-                    android:scaleType="fitCenter"
-                    />
+                    android:scaleType="fitCenter" />
+
                 <TextView
+                    android:id="@+id/accidentSelected"
                     android:layout_height="2dp"
                     android:layout_width="70dp"
                     android:layout_column="0"
                     android:layout_row="1"
                     android:layout_marginRight="20dp"
                     android:background="@color/colorPrimary"
-                    android:visibility="gone"
-                />
+                    android:visibility="gone" />
 
                 <ImageButton
                     android:id="@+id/medicalEm"
@@ -61,18 +99,17 @@
                     android:layout_height="wrap_content"
                     android:src="@drawable/syringe_2"
                     android:background="?android:selectableItemBackground"
-                    android:scaleType="fitCenter"
-                    />
+                    android:scaleType="fitCenter" />
 
                 <TextView
+                    android:id="@+id/medicalSelected"
                     android:layout_height="2dp"
                     android:layout_width="70dp"
                     android:layout_column="1"
                     android:layout_row="1"
                     android:layout_marginRight="20dp"
                     android:background="@color/colorPrimary"
-                    android:visibility="gone"
-                />
+                    android:visibility="gone" />
 
                 <ImageButton
                     android:id="@+id/assaultEm"
@@ -83,75 +120,68 @@
                     android:layout_height="wrap_content"
                     android:src="@drawable/assault"
                     android:background="?android:selectableItemBackground"
-                    android:scaleType="fitCenter"
-                    />
+                    android:scaleType="fitCenter" />
 
                 <TextView
+                    android:id="@+id/assaultSelected"
                     android:layout_height="2dp"
                     android:layout_width="70dp"
                     android:layout_column="2"
                     android:layout_row="1"
                     android:layout_marginRight="20dp"
                     android:background="@color/colorPrimary"
-                    android:visibility="gone"
-                />
+                    android:visibility="gone" />
 
-        </GridLayout>
-
-        <TextView
-            android:id="@+id/currentEmergency"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="20dp"
-            style="@style/TextAppearance.AppCompat.Light.SearchResult.Title"
-            android:textAlignment="center"
-            android:text="..."/>
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content">
-
-            <TextView
-                android:layout_width="0dp"
-                android:layout_height="1dp"
-                android:layout_weight="1" />
-
-            <TextView
-                android:layout_width="0dp"
-                android:layout_height="1dp"
-                android:layout_weight="3"
-                android:background="#111" />
-
-            <TextView
-                android:layout_width="0dp"
-                android:layout_height="1dp"
-                android:layout_weight="1" />
+            </GridLayout>
 
 
-        </LinearLayout>
+
+        <!--<LinearLayout-->
+            <!--android:layout_width="match_parent"-->
+            <!--android:layout_height="wrap_content">-->
+
+            <!--<TextView-->
+                <!--android:layout_width="0dp"-->
+                <!--android:layout_height="1dp"-->
+                <!--android:layout_weight="1" />-->
+
+            <!--<TextView-->
+                <!--android:layout_width="0dp"-->
+                <!--android:layout_height="1dp"-->
+                <!--android:layout_weight="3"-->
+                <!--android:background="#111" />-->
+
+            <!--<TextView-->
+                <!--android:layout_width="0dp"-->
+                <!--android:layout_height="1dp"-->
+                <!--android:layout_weight="1" />-->
 
 
-        <LinearLayout
-            android:id="@+id/emContactsList"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="10dp"
-            android:layout_marginTop="20dp"
-            android:orientation="vertical"
-            android:padding="2dp">
-
-            <TextView
-                android:id="@+id/emListTitle"
-                style="@style/TextAppearance.AppCompat.Light.SearchResult.Title"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_margin="5dp"
-                android:gravity="center"
-                android:padding="5dp"
-                android:text="Which contacts would you like to send an S.O.S to ?" />
+        <!--</LinearLayout>-->
 
 
-        </LinearLayout>
+        <!--<LinearLayout-->
+            <!--android:id="@+id/emContactsList"-->
+            <!--android:layout_width="match_parent"-->
+            <!--android:layout_height="wrap_content"-->
+            <!--android:layout_marginBottom="10dp"-->
+            <!--android:layout_marginTop="20dp"-->
+            <!--android:orientation="vertical"-->
+            <!--android:padding="2dp">-->
+
+            <!--<TextView-->
+                <!--android:id="@+id/emListTitle"-->
+                <!--style="@style/TextAppearance.AppCompat.Light.SearchResult.Title"-->
+                <!--android:layout_width="match_parent"-->
+                <!--android:layout_height="wrap_content"-->
+                <!--android:layout_margin="5dp"-->
+                <!--android:gravity="center"-->
+                <!--android:padding="5dp"-->
+                <!--android:text="Which contacts would you like to send an S.O.S to ?" />-->
+
+
+        <!--</LinearLayout>-->
+
 
         <LinearLayout
             android:id="@+id/emEmptyContactsList"
@@ -161,7 +191,7 @@
             android:layout_marginTop="20dp"
             android:orientation="vertical"
             android:padding="2dp"
-            android:visibility="gone">
+            android:visibility="visible">
 
             <TextView
                 android:id="@+id/emptyEmListTitle"
@@ -185,6 +215,7 @@
 
 
         </LinearLayout>
+
 
         <EditText
             android:id="@+id/sosMessage"

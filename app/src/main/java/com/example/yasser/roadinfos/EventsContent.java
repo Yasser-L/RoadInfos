@@ -128,7 +128,7 @@ public class EventsContent {
 
                         String eventName = responseObject.getString("EventName");
                         String eventDesc = responseObject.getString("EventDesc");
-                        String eventType = responseObject.getString("EventType");
+                        String eventType = responseObject.getString("com.example.yasser.roadinfos.EventType");
                         String eventDate = responseObject.getString("EventDate");
                         String eventPlace = responseObject.getString("EventPlace");
                         String eventLocX = responseObject.getString("EventLocationX");

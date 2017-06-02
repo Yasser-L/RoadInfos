@@ -1,0 +1,165 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    >
+
+    <LinearLayout
+        android:id="@+id/profile_root"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
+
+        <android.support.v7.widget.CardView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:layout_marginBottom="10dp"
+            app:cardElevation="5dp">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                >
+
+                <android.support.design.widget.TextInputLayout
+                    android:layout_height="wrap_content"
+                    android:layout_width="0dp"
+                    android:layout_weight="1"
+                    >
+
+                    <EditText
+                        android:id="@+id/profileFName"
+                        android:hint="First name"
+                        android:inputType="none"
+                        android:layout_height="wrap_content"
+                        android:layout_margin="10dp"
+                        android:layout_width="match_parent"
+                        android:padding="12dp"
+                        android:text=""
+                        android:textColor="#111" />
+                </android.support.design.widget.TextInputLayout>
+
+                <android.support.design.widget.TextInputLayout
+                    android:layout_height="wrap_content"
+                    android:layout_width="0dp"
+                    android:layout_weight="1"
+                    >
+
+                    <EditText
+                        android:hint="Last name"
+                        android:id="@+id/profileLName"
+                        android:inputType="none"
+                        android:layout_height="wrap_content"
+                        android:layout_margin="10dp"
+                        android:layout_width="match_parent"
+                        android:padding="12dp"
+                        android:text=""
+                        android:textColor="#111" />
+                </android.support.design.widget.TextInputLayout>
+
+            </LinearLayout>
+        </android.support.v7.widget.CardView>
+
+
+        <android.support.v7.widget.CardView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:layout_marginBottom="10dp"
+            app:cardElevation="5dp">
+
+            <android.support.design.widget.TextInputLayout
+                android:layout_height="wrap_content"
+                android:layout_width="match_parent"
+                >
+
+                <EditText
+                    android:hint="Phone number"
+                    android:id="@+id/profilePhone"
+                    android:inputType="none"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="10dp"
+                    android:layout_width="match_parent"
+                    android:padding="12dp"
+                    android:text=""
+                    android:textColor="#111" />
+            </android.support.design.widget.TextInputLayout>
+        </android.support.v7.widget.CardView>
+
+
+        <android.support.v7.widget.CardView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:layout_marginBottom="10dp"
+            app:cardElevation="5dp">
+
+            <RadioGroup
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_weight="2"
+                android:padding="10dp"
+                android:orientation="horizontal"
+                >
+
+                <RadioButton
+                    android:id="@+id/profileClient"
+                    android:inputType="none"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Client"
+                    android:textSize="18sp"
+                    android:layout_marginEnd="20dp"
+                    />
+                <RadioButton
+                    android:id="@+id/profileService"
+                    android:inputType="none"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Service Owner"
+                    android:textSize="18sp"
+                    />
+
+            </RadioGroup>
+        </android.support.v7.widget.CardView>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:layout_margin="20dp"
+            >
+
+            <Button
+                android:id="@+id/profileCancelEdit"
+                style="@style/Base.Widget.AppCompat.Button.Colored"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="10dp"
+                android:textSize="16sp"
+                android:text="Cancel" />
+
+            <Button
+                android:id="@+id/profileSave"
+                style="@style/Base.Widget.AppCompat.Button.Colored"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="10dp"
+                android:textSize="16sp"
+                android:text="Save"
+                />
+
+        </LinearLayout>
+
+
+
+    </LinearLayout>
+
+</ScrollView>

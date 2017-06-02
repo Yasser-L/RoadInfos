@@ -2,7 +2,10 @@ package com.example.yasser.roadinfos;
 
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.os.Bundle;
+import android.os.Environment;
 import android.support.annotation.NonNull;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.ActionBar;
@@ -14,6 +17,7 @@ import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -29,13 +33,13 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.io.File;
 import java.util.ArrayList;
 import java.util.Hashtable;
 import java.util.List;
 import java.util.Map;
 
 import static android.support.v4.app.NavUtils.navigateUpFromSameTask;
-import static com.example.yasser.roadinfos.EventData.GetEvents;
 import static com.example.yasser.roadinfos.EventDetailFragment.ARG_ITEM_ID;
 
 /**
@@ -48,14 +52,28 @@ import static com.example.yasser.roadinfos.EventDetailFragment.ARG_ITEM_ID;
  */
 public class EventListActivity extends AppCompatActivity {
 
-//    static Context context = MyApp.GetGlobalContext();
+    //    static Context context = MyApp.GetGlobalContext();
     private boolean mTwoPane;
     public List<EventData> LIST = new ArrayList<>();
+    List<Bitmap> event_images_list = new ArrayList<>();
+    String comingFrom = "";
+
+    String externalDirectory= Environment.getExternalStorageDirectory().toString();
+    private static final String IMAGE_DIRECTORY_NAME = "RoadInfos";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_event_list);
+
+        Intent intent = getIntent();
+
+        if (intent.hasExtra("type"))
+            if (intent.getStringExtra("type").equals("event"))
+                comingFrom = "last_events";
+            else
+                comingFrom = "last_services";
+
 
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
@@ -113,22 +131,23 @@ public class EventListActivity extends AppCompatActivity {
 
     private void setupRecyclerView(@NonNull RecyclerView recyclerView) {
         Log.d("EventListActivity 107", "Entered");
-        if (GetEvents(getApplicationContext(), 1) != null && GetEvents(getApplicationContext(), 1).size() != 0) {
-            Log.d("115", "setupRecyclerView: EventList works");
-            recyclerView.setAdapter(new SimpleItemRecyclerViewAdapter(GetEvents(getApplicationContext(), 1)));
-        }
-//        recyclerView.setAdapter(new SimpleItemRecyclerViewAdapter(response()));
+
+        Log.d("115", "setupRecyclerView: EventList works");
+//        if (comingFrom.equals(""))
+            recyclerView.setAdapter(new SimpleItemRecyclerViewAdapter(MyApp.EVENTS_GLOBAL));
+
     }
 
     public class SimpleItemRecyclerViewAdapter
             extends RecyclerView.Adapter<SimpleItemRecyclerViewAdapter.ViewHolder> {
 
-        private final List<EventData> mValues;
+        private List<EventData> mValues = new ArrayList<>();
 
         public SimpleItemRecyclerViewAdapter(List<EventData> items) {
             Log.d("EventListActivity 117:", "Entered");
 //            response();
-            mValues = items;
+            if (mValues.size() < 1)
+                mValues = items;
         }
 
         @Override
@@ -144,6 +163,8 @@ public class EventListActivity extends AppCompatActivity {
             holder.eventType.setText(mValues.get(position).getEventType());
             holder.eventPlace.setText(mValues.get(position).getEventPlace());
             holder.eventDate.setText(mValues.get(position).getEventDate());
+//            GetAccidentImages();
+            holder.previewImage.setImageResource(R.drawable.photo_accident);
 
             holder.mView.setOnClickListener(new View.OnClickListener() {
                 @Override
@@ -159,13 +180,14 @@ public class EventListActivity extends AppCompatActivity {
                     } else {
                         Context context = v.getContext();
                         Intent intent = new Intent(context, EventDetailActivity.class);
-                        intent.putExtra(ARG_ITEM_ID, holder.mItem.getId());
+                        intent.putExtra(ARG_ITEM_ID, holder.getAdapterPosition());
 
                         context.startActivity(intent);
                     }
                 }
             });
         }
+
 
         @Override
         public int getItemCount() {
@@ -176,11 +198,22 @@ public class EventListActivity extends AppCompatActivity {
             return mValues.size();
         }
 
+        public void GetAccidentImages() {
+            File f = new File(externalDirectory + "/" + IMAGE_DIRECTORY_NAME +"/Pictures/Accident_test");
+            File [] files = f.listFiles();
+            for ( File file : files) {
+                String path = file.getPath();
+                Bitmap bitmap = BitmapFactory.decodeFile(path);
+                event_images_list.add(bitmap);
+            }
+        }
+
         public class ViewHolder extends RecyclerView.ViewHolder {
             public final View mView;
             public final TextView eventType;
             public final TextView eventPlace;
             public final TextView eventDate;
+            public final ImageView previewImage;
             public EventData mItem;
 
             public ViewHolder(View view) {
@@ -189,6 +222,7 @@ public class EventListActivity extends AppCompatActivity {
                 eventType = (TextView) view.findViewById(R.id.eventType);
                 eventPlace = (TextView) view.findViewById(R.id.eventPlace);
                 eventDate = (TextView) view.findViewById(R.id.eventDate);
+                previewImage = (ImageView) view.findViewById(R.id.eventPreviewImage);
             }
 
             @Override
@@ -204,7 +238,7 @@ public class EventListActivity extends AppCompatActivity {
     ////////////////////////
 
 
-     public List<EventData> response() {
+    public List<EventData> response() {
 
         String GET_EVENTS_URL = "http://192.168.1.7/RoadInfos/GetEvents.php";
 
@@ -239,13 +273,14 @@ public class EventListActivity extends AppCompatActivity {
                                 EventData event = new EventData(Integer.parseInt(eventId), 1, eventName, eventDesc, eventType, eventDate, eventPlace, eventLocX, eventLocY, validated);
 
                                 LIST.add(event);
-                        }}catch (JSONException e){
+                            }
+                        } catch (JSONException e) {
                             Toast.makeText(getApplicationContext(), e.getMessage(), Toast.LENGTH_LONG).show();
 
                         }
 
 
-                            Toast.makeText(getApplicationContext(), "Success: " + s, Toast.LENGTH_LONG).show();
+                        Toast.makeText(getApplicationContext(), "Success: " + s, Toast.LENGTH_LONG).show();
                         Log.d("Mmessage", s);
                     }
                 },

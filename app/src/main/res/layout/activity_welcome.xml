@@ -12,7 +12,6 @@
         android:id="@+id/activity_welcome"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="@drawable/pattern_bg_2"
         android:tileMode="repeat"
         android:orientation="vertical"
         android:paddingBottom="16dp"
@@ -20,23 +19,23 @@
         android:paddingRight="16dp"
         android:paddingTop="@dimen/activity_vertical_margin">
 
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="10dp"
-            android:layout_marginTop="10dp"
-            android:paddingBottom="10dp">
+        <!--<LinearLayout-->
+            <!--android:layout_width="match_parent"-->
+            <!--android:layout_height="wrap_content"-->
+            <!--android:layout_marginBottom="10dp"-->
+            <!--android:layout_marginTop="10dp"-->
+            <!--android:paddingBottom="10dp">-->
 
-            <ImageButton
-                android:id="@+id/my_events_w_button"
-                android:layout_width="0dp"
-                android:layout_height="130dp"
-                android:layout_weight="3.0"
-                android:background="?android:selectableItemBackground"
-                android:scaleType="fitCenter"
-                android:src="@drawable/my_events_wide" />
+            <!--<ImageButton-->
+                <!--android:id="@+id/my_events_w_button"-->
+                <!--android:layout_width="0dp"-->
+                <!--android:layout_height="130dp"-->
+                <!--android:layout_weight="3.0"-->
+                <!--android:background="?android:selectableItemBackground"-->
+                <!--android:scaleType="fitCenter"-->
+                <!--android:src="@drawable/my_events_wide" />-->
 
-        </LinearLayout>
+        <!--</LinearLayout>-->
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -65,32 +64,6 @@
                 android:src="@drawable/search_event" />
         </LinearLayout>
 
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="10dp"
-            android:layout_marginTop="10dp"
-            android:paddingBottom="10dp">
-
-            <ImageButton
-                android:id="@+id/last_events_button"
-                android:layout_width="0dp"
-                android:layout_height="130dp"
-                android:layout_weight="3.0"
-                android:background="?android:selectableItemBackground"
-                android:scaleType="centerInside"
-                android:src="@drawable/last_events" />
-
-            <ImageButton
-                android:id="@+id/nearby_events_button"
-                android:layout_width="0dp"
-                android:layout_height="130dp"
-                android:layout_weight="3.0"
-                android:background="?android:selectableItemBackground"
-                android:elevation="5dp"
-                android:scaleType="centerInside"
-                android:src="@drawable/nearby_events" />
-        </LinearLayout>
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -109,14 +82,16 @@
                 android:src="@drawable/s_o_s" />
 
             <ImageButton
-                android:id="@+id/profile_button"
+                android:id="@+id/nearby_events_button"
                 android:layout_width="0dp"
                 android:layout_height="130dp"
                 android:layout_weight="3.0"
                 android:background="?android:selectableItemBackground"
                 android:elevation="5dp"
                 android:scaleType="centerInside"
-                android:src="@drawable/profile" />
+                android:src="@drawable/nearby_events" />
+
+
         </LinearLayout>
 
         <LinearLayout
@@ -136,13 +111,62 @@
                 android:src="@drawable/my_events" />
 
             <ImageButton
-                android:id="@+id/my_services_button"
+                android:id="@+id/last_events_button"
+                android:layout_width="0dp"
+                android:layout_height="130dp"
+                android:layout_weight="3.0"
+                android:background="?android:selectableItemBackground"
+                android:scaleType="centerInside"
+                android:src="@drawable/last_events" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="10dp"
+            android:layout_marginTop="10dp"
+            android:paddingBottom="10dp">
+
+            <ImageButton
+                android:id="@+id/my_service_button"
                 android:layout_width="0dp"
                 android:layout_height="130dp"
                 android:layout_weight="3.0"
                 android:background="?android:selectableItemBackground"
                 android:scaleType="fitCenter"
-                android:src="@drawable/my_services" />
+                android:src="@drawable/my_service" />
+
+
+            <ImageButton
+                android:id="@+id/last_services"
+                android:layout_width="0dp"
+                android:layout_height="130dp"
+                android:layout_weight="3.0"
+                android:background="?android:selectableItemBackground"
+                android:elevation="5dp"
+                android:scaleType="centerInside"
+                android:src="@drawable/last_services" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="10dp"
+            android:layout_marginTop="10dp"
+            android:paddingBottom="10dp">
+
+
+            <ImageButton
+                android:id="@+id/profile_button"
+                android:layout_width="0dp"
+                android:layout_height="130dp"
+                android:layout_weight="3.0"
+                android:background="?android:selectableItemBackground"
+                android:elevation="5dp"
+                android:scaleType="centerInside"
+                android:src="@drawable/profile" />
 
         </LinearLayout>
 

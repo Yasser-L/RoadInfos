@@ -3,7 +3,7 @@
     package="com.example.yasser.roadinfos">
 
     <uses-permission android:name="android.permission.READ_CONTACTS" />
-    <uses-permission android:name="android.permission.INTERNET"/>
+    <uses-permission android:name="android.permission.INTERNET" />
 
     <uses-feature
         android:name="android.hardware.camera"
@@ -13,11 +13,10 @@
     <uses-permission android:name="android.permission.WRITE_INTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
 
-
-
     <application
+        android:name=".MyApp"
         android:allowBackup="true"
-        android:icon="@mipmap/ic_launcher"
+        android:icon="@drawable/ri_logo"
         android:label="@string/app_name"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
@@ -34,7 +33,11 @@
         </activity>
         <activity
             android:name=".WelcomeActivity"
-            android:screenOrientation="portrait" />
+            android:screenOrientation="portrait">
+            <meta-data
+                android:name="android.app.default_searchable"
+                android:value=".SearchActivity" />
+        </activity>
         <activity
             android:name=".Signup2"
             android:screenOrientation="portrait" />
@@ -73,20 +76,33 @@
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="com.example.yasser.roadinfos.EventListActivity" />
         </activity>
+        <activity android:name=".SearchActivity">
+            <intent-filter>
+                <action android:name="android.intent.action.SEARCH" />
+            </intent-filter>
 
-        <application
-            android:name=".com.example.yasser.roadinfos.MyApp"
-            android:allowBackup="true"
-            android:icon="@mipmap/ic_launcher"
-            android:label="@string/app_name"
-            android:supportsRtl="true"
-            android:theme="@style/AppTheme">
+            <meta-data
+                android:name="android.app.searchable"
+                android:resource="@xml/searchable" />
+        </activity>
 
+        <!-- <application -->
+        <!-- android:name=".com.example.yasser.roadinfos.MyApp" -->
+        <!-- android:allowBackup="true" -->
+        <!-- android:icon="@mipmap/ic_launcher" -->
+        <!-- android:label="@string/app_name" -->
+        <!-- android:supportsRtl="true" -->
+        <!-- android:theme="@style/AppTheme" /> -->
 
-        </application>
-
+        <activity
+            android:name=".MainProfileActivity"
+            android:label="@string/title_activity_main_profile"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity
+            android:name=".MyServiceMainActivity"
+            android:label="@string/title_activity_my_service_main"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity android:name=".LastEventsList"></activity>
     </application>
-
-
 
 </manifest>

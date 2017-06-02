@@ -7,7 +7,6 @@ import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.TextView;
 
 import com.example.yasser.roadinfos.dummy.DummyContent;
 
@@ -52,13 +51,13 @@ public class EventDetailFragment extends Fragment {
 
 //            eventData = GetEvents(getActivity(), 1).get((int)getArguments().get(ARG_ITEM_ID));
 
-            EventListActivity activityForList = new EventListActivity();
             eventData = GetEvents(getActivity().getApplicationContext(), 1).get((int)getArguments().get(ARG_ITEM_ID));
 
             Activity activity = this.getActivity();
             CollapsingToolbarLayout appBarLayout = (CollapsingToolbarLayout) activity.findViewById(R.id.toolbar_layout);
             if (appBarLayout != null) {
                 appBarLayout.setTitle(eventData.getEventName());
+//                appBarLayout.setTitle("");
             }
         }
     }
@@ -69,10 +68,10 @@ public class EventDetailFragment extends Fragment {
         View rootView = inflater.inflate(R.layout.event_detail, container, false);
 
         // Show the dummy content as text in a TextView.
-        if (eventData != null) {
-            ((TextView) rootView.findViewById(R.id.event_detail)).setText(eventData.getEventName());
-
-        }
+//        if (eventData != null) {
+//            ((TextView) rootView.findViewById(R.id.event_detail)).setText("TEST");
+//
+//        }
 
         return rootView;
     }

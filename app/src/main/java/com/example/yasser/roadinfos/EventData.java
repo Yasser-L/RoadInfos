@@ -31,7 +31,7 @@ public class EventData {
     private String  EventName, EventDesc, EventType, EventDate, EventPlace, EventLocX, EventLocY, Validated;
     private static Context context;
 
-    public static List<EventData> EVENTS_LIST = new ArrayList<>();
+    private static List<EventData> EVENTS_LIST = new ArrayList<>();
 
 //    static {
 //        EVENTS_LIST = GetEvents(MyApp.GetGlobalContext(), 1);
@@ -131,11 +131,10 @@ public class EventData {
 
     public static List<EventData> GetEvents(final Context context, final int userId) {
 
-        String GET_EVENTS_URL = "http://192.168.1.6/RoadInfos/GetEvents.php";
 
         final String[] res = new String[1];
 
-        StringRequest stringRequest = new StringRequest(Request.Method.POST, GET_EVENTS_URL,
+        StringRequest stringRequest = new StringRequest(Request.Method.POST, Config.GET_EVENTS,
                 new Response.Listener<String>() {
                     @Override
                     public void onResponse(String s) {
@@ -145,7 +144,7 @@ public class EventData {
                         Log.d("response", res[0]);
                         try {
 //                            JSONObject object = new JSONObject();
-                            JSONArray array = new JSONArray(EventListActivity.delete_first_char(res[0]));
+                            JSONArray array = new JSONArray(res[0]);
                             for (int i = 0; i < array.length(); i++) {
                                 Log.d("Inside jsonarray", "Entered");
 
@@ -165,13 +164,14 @@ public class EventData {
 
                                 if (!EVENTS_LIST.contains(event))
                                     EVENTS_LIST.add(event);
-                            }}catch (JSONException e){
-                            Toast.makeText(context, e.getMessage(), Toast.LENGTH_LONG).show();
+                            }
+                        }catch (JSONException e){
+//                            Toast.makeText(context, e.getMessage(), Toast.LENGTH_LONG).show();
 
                         }
 
 
-                        Toast.makeText(context, "Success (line 174)", Toast.LENGTH_LONG).show();
+                        Toast.makeText(context, "Success (line 172)", Toast.LENGTH_LONG).show();
                         Log.d("Mmessage", s);
                     }
                 },
@@ -181,7 +181,8 @@ public class EventData {
                         //Dismissing the progress dialog
 
                         //Showing toast
-                        Log.d("MmessageError", volleyError.getMessage());
+                        if (volleyError != null)
+                            Log.d("MmessageError", volleyError.getMessage()+"");
                         Toast.makeText(context, "eeee: " + volleyError.getMessage(), Toast.LENGTH_LONG).show();
                     }
                 }) {
@@ -199,6 +200,7 @@ public class EventData {
                 //returning parameters
                 return params;
             }
+
         };
 
         //Creating a Request Queue

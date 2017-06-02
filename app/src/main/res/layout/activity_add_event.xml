@@ -10,118 +10,154 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="@drawable/pattern_bg_2"
         android:orientation="vertical">
 
-        <LinearLayout
+        <android.support.v7.widget.CardView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_margin="10dp">
+            android:layout_margin="10dp"
+            app:cardElevation="5dp">
 
-            <android.support.design.widget.TextInputLayout
+            <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_gravity="center">
+                android:layout_margin="10dp">
 
-                <EditText
+                <android.support.design.widget.TextInputLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:drawablePadding="10dp"
-                    android:drawableStart="@drawable/event_name"
-                    android:hint="Event name"
-                    android:textColor="@color/textPrimary"
-                    android:textSize="16sp" />
+                    android:layout_gravity="center">
 
-            </android.support.design.widget.TextInputLayout>
+                    <EditText
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:drawablePadding="10dp"
+                        android:drawableStart="@drawable/event_name"
+                        android:hint="Event name"
+                        android:textColor="@color/textPrimary"
+                        android:textSize="16sp" />
 
-        </LinearLayout>
+                </android.support.design.widget.TextInputLayout>
+
+            </LinearLayout>
+        </android.support.v7.widget.CardView>
+
+        <android.support.v7.widget.CardView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="10dp"
+            app:cardElevation="5dp">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="10dp">
+
+
+                <android.support.design.widget.TextInputLayout
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:layout_weight="3">
+
+                    <EditText
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:drawablePadding="10dp"
+                        android:drawableStart="@drawable/description"
+                        android:hint="Event description"
+                        android:textColor="@color/textPrimary"
+                        android:textSize="16sp" />
+
+                </android.support.design.widget.TextInputLayout>
+
+            </LinearLayout>
+        </android.support.v7.widget.CardView>
+
+        <android.support.v7.widget.CardView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="10dp"
+            app:cardElevation="5dp">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="20dp">
+
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:layout_weight="2"
+                    android:text="Event Type :"
+                    android:textColor="@color/colorPrimary"
+                    android:textSize="18sp"
+                    android:textStyle="bold" />
+
+                <Spinner
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="3"
+                    android:entries="@array/event_types"
+                    android:textColor="@color/textPrimary" />
+
+            </LinearLayout>
+        </android.support.v7.widget.CardView>
+
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_margin="10dp">
+            android:layout_height="wrap_content">
 
-
-            <android.support.design.widget.TextInputLayout
+            <Button
+                android:id="@+id/newFolderTest"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
-                android:layout_weight="3">
+                android:layout_margin="10dp"
+                android:layout_weight="1"
+                android:background="@color/colorPrimary"
+                android:drawablePadding="10dp"
+                android:drawableStart="@drawable/gallery"
+                android:padding="5dp"
+                android:text="PICK FROM GALLERY"
+                android:textColor="@color/white"
+                android:textSize="18sp" />
 
-                <EditText
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:drawablePadding="10dp"
-                    android:drawableStart="@drawable/description"
-                    android:hint="Event description"
-                    android:textColor="@color/textPrimary"
-                    android:textSize="16sp" />
-
-            </android.support.design.widget.TextInputLayout>
-
-        </LinearLayout>
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_margin="20dp">
-
-            <TextView
+            <Button
+                android:id="@+id/takePicture"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
-                android:layout_weight="2"
-                android:text="Event Type :"
-                android:textColor="@color/textPrimary"
-                android:textSize="16sp" />
-
-            <Spinner
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="3"
-                android:entries="@array/event_types"
-                android:textColor="@color/textPrimary" />
+                android:layout_margin="10dp"
+                android:layout_weight="1"
+                android:background="@color/colorPrimary"
+                android:drawablePadding="5dp"
+                android:drawableStart="@drawable/camera"
+                android:padding="5dp"
+                android:text="Take a picture"
+                android:textColor="@color/white"
+                android:textSize="18sp" />
 
         </LinearLayout>
 
-        <Button
-            android:id="@+id/newFolderTest"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:layout_marginTop="20dp"
-            android:background="@color/colorPrimary"
-            android:drawablePadding="10dp"
-            android:drawableStart="@drawable/camera"
-            android:padding="5dp"
-            android:text="PICK FROM GALLERY"
-            android:textColor="@color/textSecondary"
-            android:textSize="20sp" />
 
-        <Button
-            android:id="@+id/takePicture"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:layout_marginBottom="20dp"
-            android:layout_marginTop="20dp"
-            android:background="@color/colorPrimary"
-            android:drawablePadding="10dp"
-            android:drawableStart="@drawable/camera"
-            android:padding="5dp"
-            android:text="Take a picture"
-            android:textColor="@color/textSecondary"
-            android:textSize="20sp" />
-
-
-        <android.support.v7.widget.RecyclerView
-            android:id="@+id/eventImagesRV"
+        <android.support.v7.widget.CardView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="#fff"
-            android:clipToPadding="false"
-            android:scrollbars="vertical"
-            tools:listitem="@layout/album_card" />
+            android:padding="5dp"
+            app:cardElevation="5dp">
+
+            <android.support.v7.widget.RecyclerView
+                android:id="@+id/eventImagesRV"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="#fff"
+                android:clipToPadding="false"
+                android:scrollbars="vertical"
+                tools:listitem="@layout/album_card" />
+        </android.support.v7.widget.CardView>
 
 
         <Button
@@ -134,7 +170,7 @@
             android:background="@color/colorPrimary"
             android:padding="10dp"
             android:text="Add event"
-            android:textColor="@color/textSecondary"
+            android:textColor="@color/white"
             android:textSize="20sp" />
 
     </LinearLayout>

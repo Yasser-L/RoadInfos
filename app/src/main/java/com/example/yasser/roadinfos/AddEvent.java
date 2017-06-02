@@ -15,7 +15,7 @@ import android.os.Environment;
 import android.provider.MediaStore;
 import android.support.v4.content.FileProvider;
 import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Base64;
 import android.util.DisplayMetrics;
@@ -64,6 +64,7 @@ public class AddEvent extends AppCompatActivity implements BaseSliderView.OnSlid
     String mCurrentPhotoPath;
     static final int REQUEST_TAKE_PHOTO = 1;
     String externalDirectory= Environment.getExternalStorageDirectory().toString();
+    private static final String IMAGE_DIRECTORY_NAME = "RoadInfos";
     // Activity request codes
     private static final int CAMERA_CAPTURE_IMAGE_REQUEST_CODE = 100;
     private static final int CAMERA_CAPTURE_VIDEO_REQUEST_CODE = 200;
@@ -71,7 +72,6 @@ public class AddEvent extends AppCompatActivity implements BaseSliderView.OnSlid
     public static final int MEDIA_TYPE_VIDEO = 2;
 
     // directory name to store captured images and videos
-    private static final String IMAGE_DIRECTORY_NAME = "RoadInfos";
 
     //
     static File Photos_Directory;
@@ -80,7 +80,7 @@ public class AddEvent extends AppCompatActivity implements BaseSliderView.OnSlid
 
     static File mediaFile = null;
 
-    private String UPLOAD_URL ="http://192.168.1.2/RoadInfos/UploadImages.php";
+    private String UPLOAD_URL ="http://192.168.1.6/RoadInfos/UploadImages.php";
 
     float dpHeight, dpWidth;
 //    private String KEY_IMAGE = "image";
@@ -132,7 +132,7 @@ public class AddEvent extends AppCompatActivity implements BaseSliderView.OnSlid
 //        del_event_image4 = (ImageButton) findViewById(R.id.delEventImage4);
 
         imagesRV = (RecyclerView) findViewById(R.id.eventImagesRV);
-        RecyclerView.LayoutManager manager = new LinearLayoutManager(getApplicationContext());
+        RecyclerView.LayoutManager manager = new GridLayoutManager(getApplicationContext(), 2);
         imagesRV.setLayoutManager(manager);
 
 
@@ -206,85 +206,21 @@ public class AddEvent extends AppCompatActivity implements BaseSliderView.OnSlid
                         // Delete images buttons //
         ////////////////////////////////////////////////////////////
 
-//        final GridLayout.LayoutParams params = (GridLayout.LayoutParams) event_image.getLayoutParams();
-//        params.width = 0;
-//        params.height = 0;
 
+        add_event.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
 
-//        del_event_image.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                event_image.setImageDrawable(null);GridLayout.LayoutParams params = (GridLayout.LayoutParams) event_image.getLayoutParams();
-//                params.width = 0;
-//                params.height = 0;
-//                event_image.setLayoutParams(params);
-//                v.setVisibility(View.GONE);
-//            }
-//        });
-//
-//        del_event_image2.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                event_image_2.setImageDrawable(null);
-//                GridLayout.LayoutParams params = (GridLayout.LayoutParams) event_image.getLayoutParams();
-//                params.width = 0;
-//                params.height = 0;
-//                event_image_2.setLayoutParams(params);
-//                v.setVisibility(View.GONE);
-//            }
-//        });
-//
-//        del_event_image3.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                event_image_3.setImageDrawable(null);
-//                GridLayout.LayoutParams params = (GridLayout.LayoutParams) event_image.getLayoutParams();
-//                params.width = 0;
-//                params.height = 0;
-//                event_image_3.setLayoutParams(params);
-//                v.setVisibility(View.GONE);
-//            }
-//        });
-//
-//        del_event_image4.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                event_image_4.setImageDrawable(null);
-//                GridLayout.LayoutParams params = (GridLayout.LayoutParams) event_image.getLayoutParams();
-//                params.width = 0;
-//                params.height = 0;
-//                event_image_4.setLayoutParams(params);
-//                v.setVisibility(View.GONE);
-//            }
-//        });
-//
-//        final Bitmap[] bm = new Bitmap[1];
-//        add_event.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                if (event_image.getDrawable() == null && event_image_2.getDrawable() == null && event_image_3.getDrawable() == null
-//                        && event_image_4.getDrawable() == null){
-//                    Toast.makeText(getApplicationContext(), "No images!", Toast.LENGTH_LONG).show();
-//                    return;
-//                }
-//                if (event_image.getDrawable() != null){
-//                    bm[0] = ((BitmapDrawable)event_image.getDrawable()).getBitmap();
-//                    UploadImage(bm[0], 1);
-//                }
-//                if (event_image_2.getDrawable() != null){
-//                    bm[0] = ((BitmapDrawable)event_image_2.getDrawable()).getBitmap();
-//                    UploadImage(bm[0], 1);
-//                }
-//                if (event_image_3.getDrawable() != null){
-//                    bm[0] = ((BitmapDrawable)event_image_3.getDrawable()).getBitmap();
-//                    UploadImage(bm[0], 1);
-//                }
-//                if (event_image_4.getDrawable() != null){
-//                    bm[0] = ((BitmapDrawable)event_image_4.getDrawable()).getBitmap();
-//                    UploadImage(bm[0], 1);
-//                }
-//            }
-//        });
+                if (imagesList != null && imagesList.size() > 0) {
+                    for ( Bitmap bitmap : imagesList) {
+                        UploadImage(bitmap);
+//                        Toast.makeText(getApplicationContext(), bitmap.toString() + " uploaded", Toast.LENGTH_LONG).show();
+                    }
+                }
+                else
+                    Toast.makeText(getApplicationContext(), "Please add images first!", Toast.LENGTH_LONG).show();
+            }
+        });
 
 
     }
@@ -302,9 +238,9 @@ public class AddEvent extends AppCompatActivity implements BaseSliderView.OnSlid
                 previewCapturedImage();
             } else if (resultCode == RESULT_CANCELED) {
                 // user cancelled Image capture
-                Toast.makeText(getApplicationContext(),
-                        "User cancelled image capture", Toast.LENGTH_SHORT)
-                        .show();
+//                Toast.makeText(getApplicationContext(),
+//                        "User cancelled image capture", Toast.LENGTH_SHORT)
+//                        .show();
             } else {
                 // failed to capture image
                 Toast.makeText(getApplicationContext(),
@@ -345,6 +281,7 @@ public class AddEvent extends AppCompatActivity implements BaseSliderView.OnSlid
                     Bitmap bitmap = BitmapFactory.decodeFile(filePath, options);
 //                    event_image.setImageBitmap(bitmap);
 //                    del_event_image.setVisibility(View.VISIBLE);
+
 
                     // Updating RecyclerView
                     imagesList.add(bitmap);
@@ -470,7 +407,8 @@ public class AddEvent extends AppCompatActivity implements BaseSliderView.OnSlid
             // images
             options.inSampleSize = 4;
 
-            final Bitmap bitmap = BitmapFactory.decodeFile(fileUri.getPath(),
+
+            final Bitmap bitmap = BitmapFactory.decodeFile("/storage/emulated/0/RoadInfos/Pictures/EventData/"+fileUri.getLastPathSegment(),
                     options);
 
             imagesList.add(bitmap);
@@ -667,7 +605,7 @@ public class AddEvent extends AppCompatActivity implements BaseSliderView.OnSlid
 
 
 
-    private void UploadImage(final Bitmap bitmap, final int imageNumber){
+    private void UploadImage(final Bitmap bitmap){
         //Showing the progress dialog
         final ProgressDialog loading = ProgressDialog.show(this,"Uploading...","Please wait...",false,false);
         StringRequest stringRequest = new StringRequest(Request.Method.POST, UPLOAD_URL,
@@ -677,7 +615,7 @@ public class AddEvent extends AppCompatActivity implements BaseSliderView.OnSlid
                         //Disimissing the progress dialog
                         loading.dismiss();
                         //Showing toast message of the response
-                        Toast.makeText(getApplicationContext(), "Success: " +s, Toast.LENGTH_LONG).show();
+//                        Toast.makeText(getApplicationContext(), "Success: " +s, Toast.LENGTH_LONG).show();
                         Log.d("messg",s);
                     }
                 },
@@ -688,26 +626,28 @@ public class AddEvent extends AppCompatActivity implements BaseSliderView.OnSlid
                         loading.dismiss();
 
                         //Showing toast
-                        Toast.makeText(getApplicationContext(), "eeee: " +volleyError.getMessage(), Toast.LENGTH_LONG).show();
+//                        Toast.makeText(getApplicationContext(), "eeee: " +volleyError.getMessage(), Toast.LENGTH_LONG).show();
                     }
                 }){
             @Override
             protected Map<String, String> getParams() throws AuthFailureError {
+
                 //Converting Bitmap to String
                 String image = getStringImage(bitmap);
-
 
                 //Creating parameters
                 Map<String,String> params = new Hashtable<String, String>();
 
                 //Adding parameters
-                params.put("name", "Event1_Image"+imageNumber);
+                params.put("name", "Event_Image_"+RandomId());
                 params.put("image", image);
+
 
                 //returning parameters
                 return params;
             }
         };
+
 
         //Creating a Request Queue
         RequestQueue requestQueue = Volley.newRequestQueue(this);
@@ -715,6 +655,7 @@ public class AddEvent extends AppCompatActivity implements BaseSliderView.OnSlid
         //Adding request to the queue
         requestQueue.add(stringRequest);
     }
+
 
 
     private void DeleteItem(int position) {

@@ -1,8 +1,6 @@
 package com.example.yasser.roadinfos;
 
-import android.app.AlertDialog;
 import android.content.Context;
-import android.content.DialogInterface;
 import android.graphics.Bitmap;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v7.widget.RecyclerView;
@@ -10,8 +8,8 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
-import android.widget.TextView;
-import android.widget.Toast;
+
+import com.squareup.picasso.Picasso;
 
 import java.util.List;
 
@@ -44,7 +42,7 @@ public class ImageGalleryAdapter extends RecyclerView.Adapter<ImageGalleryAdapte
 
     @Override
     public void onBindViewHolder(ImageGalleryAdapter.GalleryViewHolder viewHolder, final int i) {
-        viewHolder.title.setText(imagesList.get(i).toString());
+//        viewHolder.title.setText(imagesList.get(i).toString());
         viewHolder.img.setScaleType(ImageView.ScaleType.CENTER_CROP);
         viewHolder.img.setImageBitmap((imagesList.get(i)));
 
@@ -58,7 +56,7 @@ public class ImageGalleryAdapter extends RecyclerView.Adapter<ImageGalleryAdapte
     }
 
     public class GalleryViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
-        private TextView title;
+//        private TextView title;
         private ImageView img, overflow;
         private FloatingActionButton removeImage;
 
@@ -66,39 +64,39 @@ public class ImageGalleryAdapter extends RecyclerView.Adapter<ImageGalleryAdapte
         public GalleryViewHolder(View view) {
             super(view);
 
-            title = (TextView)view.findViewById(R.id.album_title);
+//            title = (TextView)view.findViewById(R.id.album_title);
             img = (ImageView) view.findViewById(R.id.thumbnail);
-            overflow = (ImageView) view.findViewById(R.id.overflow);
+//            overflow = (ImageView) view.findViewById(R.id.overflow);
 
-            overflow.setOnClickListener(this);
+//        overflow.setOnClickListener(this);
         }
 
         @Override
         public void onClick(View v){
 
-            if (v.getId() == overflow.getId()){
-                new AlertDialog.Builder(context)
-                        .setTitle("Remove picture")
-                        .setMessage("Are you sure you want to remove this picture?")
-                        .setPositiveButton("OK", new DialogInterface.OnClickListener() {
-                            @Override
-                            public void onClick(DialogInterface dialog, int which) {
-                                imagesList.remove(getAdapterPosition());
-                                notifyItemRemoved(getAdapterPosition());
-                                notifyDataSetChanged();
-                            }
-                        })
-                        .setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
-                            @Override
-                            public void onClick(DialogInterface dialog, int which) {
-                                Toast.makeText(context, "Operation canceled.", Toast.LENGTH_LONG).show();
-                            }
-                        })
-                        .create()
-                        .show();
+//            if (v.getId() == overflow.getId()){
+//                new AlertDialog.Builder(context)
+//                        .setTitle("Remove picture")
+//                        .setMessage("Are you sure you want to remove this picture?")
+//                        .setPositiveButton("OK", new DialogInterface.OnClickListener() {
+//                            @Override
+//                            public void onClick(DialogInterface dialog, int which) {
+//                                imagesList.remove(getAdapterPosition());
+//                                notifyItemRemoved(getAdapterPosition());
+//                                notifyDataSetChanged();
+//                            }
+//                        })
+//                        .setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+//                            @Override
+//                            public void onClick(DialogInterface dialog, int which) {
+//                                Toast.makeText(context, "Operation canceled.", Toast.LENGTH_LONG).show();
+//                            }
+//                        })
+//                        .create()
+//                        .show();
 
 
-            }
+//            }
 
         }
 
